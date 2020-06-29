@@ -1,30 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "structs.h"
-// todo: make a structures
-
-
+#include <string.h>
+#include "structures/Person.h"
+#include "structures/Ware.h"
+#include "structures/Invoice.h"
+#include "structures/Address.h"
 
 int main() {
-    printf("Hello, World!\n");
+    struct Address address = createAddress("ul. Dolna 15", "24-444", "Bytom");
+    struct Person person = createPerson("CarWash", "Jane", "Doe", "2151252", &address);
 
-    char* string;
-    FILE *ptr;
-    // todo: add invoice variables
+    struct Ware ware = createWare("schabowy", 14, 4, 4, 23, 4, 10);
+    struct Ware wareee = createWare("kotlet", 22, 5, 4, 23, 4, 10);
 
+    struct Invoice invoice = createInvoice("1215354", "26.07.2020", 234, 2131, 111, &person, &person);
 
-    if ((ptr = fopen("C:\\Users\\macie\\Desktop\\invoice\\invoice.txt", "r")) == NULL) {
-        printf("Error! opening file");
-        exit(1);
-    }
+    addWare(&invoice, &ware);
+    addWare(&invoice, &wareee);
 
-    while((string= fgetc(ptr)) != EOF){
-        printf("%c", string);
+    showInvoice(&invoice);
 
-        // todo: assign file values to variables
-    }
-
-    fclose(ptr);
     return 0;
 }
 
