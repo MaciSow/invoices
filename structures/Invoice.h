@@ -10,6 +10,8 @@ struct Invoice {
     struct Person *solder;
     struct Person *buyer;
     struct Ware *wHead;
+    struct Invoice *iNext;
+
 };
 
 
