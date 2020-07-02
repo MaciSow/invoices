@@ -43,15 +43,17 @@ struct Invoice createEmptyInvoice() {
 }
 
 void fillInvoice(struct Invoice *invoice, struct Person *solder, struct Person *buyer, char documentNumber[10],
-                 char date[20], char netSum[15], char taxSum[15], char grossSum[15]) {
+                 char date[20], char paymentDeadline[20], char netSum[15], char taxSum[15], char grossSum[15],
+                 char paid[15]) {
     strcpy(invoice->documentNumber, documentNumber);
     strcpy(invoice->date, date);
+    strcpy(invoice->paymentDeadline, paymentDeadline);
     invoice->netSum = strtof(netSum, NULL);
     invoice->taxSum = strtof(taxSum, NULL);
     invoice->grossSum = strtof(grossSum, NULL);
+    invoice->paid = strtof(paid, NULL);
     invoice->solder = solder;
     invoice->buyer = buyer;
-//    invoice->wHead = (struct Ware *) malloc(sizeof(struct Ware));
     invoice->wHead = NULL;
 };
 
@@ -82,10 +84,16 @@ void showInvoice(struct Invoice *invoice) {
     printf("%65s%11s|%11s|%11s\n", "Sum:", "Net", "Tax", "Gross");
     printf("%100s\n", "---------------------------------------");
 
-    printf("%76.2f %11.2f %11.2f",
+    printf("%76.2f %11.2f %11.2f\n%17s %s\n%17s %s\n%17s %.2f",
            invoice->netSum,
            invoice->taxSum,
-           invoice->grossSum
+           invoice->grossSum,
+           "Account Number:",
+           formatAccountNumber(invoice->solder->accountNumber),
+           "Payment Deadline:",
+           invoice->paymentDeadline,
+           "Paid:",
+           invoice->paid
     );
     printf("\n====================================================================================================\n");
 }
@@ -105,4 +113,24 @@ void addWare(struct Invoice *invoice, struct Ware *ware) {
         current->wNext = ware;
         current->wNext->wNext = NULL;
     }
+}
+
+char *formatAccountNumber(const char *accountNumber) {
+    char *correctFormat = malloc(40);
+    memset(correctFormat, 0, 40);
+
+    int index = 0;
+
+    for (int i = 0; i < 26; ++i) {
+        correctFormat[index] = accountNumber[i];
+
+        if (i % 4 == 1) {
+            index++;
+            correctFormat[index] = ' ';
+        }
+        index++;
+    }
+
+    return correctFormat;
+
 }

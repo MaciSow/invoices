@@ -18,42 +18,41 @@ void readData(struct Invoice **invoiceList) {
     }
 
     int length;
+    int counter = 0;
     int index = 0;
     int start = 0;
-    char invoiceData[18][50];
+    char invoiceData[19][50];
     char wareData[7][50];
-    char summaryData[3][15];
-
+    char summaryData[5][15];
     int section = 1;
-
     struct Invoice *invoice;
+
     while (fgets(string, 50, (FILE *) ptr) != NULL) {
 
         if (checkString(string, "------")) {
 
             struct Address *addressSolder;
             addressSolder = (struct Address *) malloc(sizeof(struct Address));
-            fillAddress(addressSolder, invoiceData[6], invoiceData[7], invoiceData[8],
-                        invoiceData[9]);
+            fillAddress(addressSolder, invoiceData[7], invoiceData[8], invoiceData[9],
+                        invoiceData[10]);
 
             struct Address *addressBuyer;
             addressBuyer = (struct Address *) malloc(sizeof(struct Address));
-            fillAddress(addressBuyer, invoiceData[14], invoiceData[15],
-                        invoiceData[16], invoiceData[17]);
+            fillAddress(addressBuyer, invoiceData[15], invoiceData[16],
+                        invoiceData[17], invoiceData[18]);
 
             struct Person *solder;
             solder = (struct Person *) malloc(sizeof(struct Person));
             fillPerson(solder, addressSolder, invoiceData[2], invoiceData[4], invoiceData[5],
-                       invoiceData[3]);
+                       invoiceData[3],invoiceData[6]);
 
             struct Person *buyer;
             buyer = (struct Person *) malloc(sizeof(struct Person));
-            fillPerson(buyer, addressBuyer, invoiceData[10], invoiceData[12], invoiceData[13],
-                       invoiceData[11]);
+            fillPerson(buyer, addressBuyer, invoiceData[11], invoiceData[13], invoiceData[14],
+                       invoiceData[12],"");
 
             invoice = (struct Invoice *) malloc(sizeof(struct Invoice));
-//            printf("invoice: %p\n", invoice);
-            fillInvoice(invoice, solder, buyer, invoiceData[0], invoiceData[1], "0", "0", "0");
+            fillInvoice(invoice, solder, buyer, invoiceData[0], invoiceData[1], "0", "0", "0","","0");
 
             section = 2;
             continue;
@@ -69,8 +68,11 @@ void readData(struct Invoice **invoiceList) {
             invoice->netSum = strtof(summaryData[0],NULL);
             invoice->taxSum = strtof(summaryData[1],NULL);
             invoice->grossSum = strtof(summaryData[2],NULL);
+            strcpy(invoice->paymentDeadline,summaryData[3]);
+            invoice->paid = strtof(summaryData[4],NULL);
 
             addInvoice(invoiceList,invoice);
+            counter++;
             index = 0;
             section = 1;
             continue;
@@ -129,10 +131,8 @@ void readData(struct Invoice **invoiceList) {
         }
         start = 0;
     }
-
-//    showInvoice(invoice);
-
     fclose(ptr);
+    printf("\n\nFile read done\n%i invoices loaded\n", counter);
 }
 
 void addInvoice(struct Invoice **invoiceList, struct Invoice *invoice) {

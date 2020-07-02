@@ -18,19 +18,18 @@ createPerson(char companyName[50], char name[50], char surname[50], char nip[20]
 };
 
 void fillPerson(struct Person *person, struct Address *address, char companyName[50], char name[50], char surname[50],
-                char nip[20]) {
+                char nip[20], char accountNumber[30]) {
     strcpy(person->companyName, companyName);
     strcpy(person->name, name);
     strcpy(person->surname, surname);
     strcpy(person->nip, nip);
-//    person->address = (struct Address *) malloc(sizeof(struct Address));
+    strcpy(person->accountNumber, accountNumber);
     person->address = address;
 }
 
 void showPerson(struct Person *person) {
     if (strcmp(person->nip, "---") == 0) {
-        printf("    %s\n    %s %s",
-               person->companyName,
+        printf("    %s %s",
                person->name,
                person->surname
         );
