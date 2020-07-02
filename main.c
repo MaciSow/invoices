@@ -9,8 +9,13 @@
 
 int main() {
 
-    readData();
+    struct Invoice *invoiceList;
 
+    invoiceList = NULL;
+
+    readData(&invoiceList);
+
+    showInvoiceList(invoiceList);
 
     return 0;
 }

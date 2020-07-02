@@ -29,21 +29,21 @@ void fillPerson(struct Person *person, struct Address *address, char companyName
 
 void showPerson(struct Person *person) {
     if (strcmp(person->nip, "---") == 0) {
-        printf("%s\n%s %s",
+        printf("    %s\n    %s %s",
                person->companyName,
                person->name,
                person->surname
         );
     } else {
-        printf("%s\n%s %s\n%s",
+        printf("    %s\t%s\n    %s %s",
                person->companyName,
+               person->nip,
                person->name,
-               person->surname,
-               person->nip
+               person->surname
         );
     }
 
-    printf("\n\nAdres:\n");
+    printf("\n\n    Address:\n");
     showAddress(person->address);
 };
 

@@ -8,7 +8,7 @@
 #include "Address.h"
 #include "Ware.h"
 
-void readData() {
+void readData(struct Invoice **invoiceList) {
     char string[255];
     FILE *ptr;
 
@@ -20,8 +20,9 @@ void readData() {
     int length;
     int index = 0;
     int start = 0;
-    char firstSectionData[18][50];
+    char invoiceData[18][50];
     char wareData[7][50];
+    char summaryData[3][15];
 
     int section = 1;
 
@@ -32,27 +33,27 @@ void readData() {
 
             struct Address *addressSolder;
             addressSolder = (struct Address *) malloc(sizeof(struct Address));
-            fillAddress(addressSolder, firstSectionData[6], firstSectionData[7], firstSectionData[8],
-                        firstSectionData[9]);
+            fillAddress(addressSolder, invoiceData[6], invoiceData[7], invoiceData[8],
+                        invoiceData[9]);
 
             struct Address *addressBuyer;
             addressBuyer = (struct Address *) malloc(sizeof(struct Address));
-            fillAddress(addressBuyer, firstSectionData[14], firstSectionData[15],
-                        firstSectionData[16], firstSectionData[17]);
+            fillAddress(addressBuyer, invoiceData[14], invoiceData[15],
+                        invoiceData[16], invoiceData[17]);
 
             struct Person *solder;
             solder = (struct Person *) malloc(sizeof(struct Person));
-            fillPerson(solder, addressSolder, firstSectionData[2], firstSectionData[4], firstSectionData[5],
-                       firstSectionData[3]);
+            fillPerson(solder, addressSolder, invoiceData[2], invoiceData[4], invoiceData[5],
+                       invoiceData[3]);
 
             struct Person *buyer;
             buyer = (struct Person *) malloc(sizeof(struct Person));
-            fillPerson(buyer, addressBuyer, firstSectionData[10], firstSectionData[12], firstSectionData[13],
-                       firstSectionData[11]);
+            fillPerson(buyer, addressBuyer, invoiceData[10], invoiceData[12], invoiceData[13],
+                       invoiceData[11]);
 
             invoice = (struct Invoice *) malloc(sizeof(struct Invoice));
-            printf("invoice: %p\n", invoice);
-            fillInvoice(invoice, solder, buyer, firstSectionData[0], firstSectionData[1], "0", "0", "0");
+//            printf("invoice: %p\n", invoice);
+            fillInvoice(invoice, solder, buyer, invoiceData[0], invoiceData[1], "0", "0", "0");
 
             section = 2;
             continue;
@@ -65,7 +66,11 @@ void readData() {
         }
 
         if (checkString(string, "######")) {
-//            invoice.netSum = 15;
+            invoice->netSum = strtof(summaryData[0],NULL);
+            invoice->taxSum = strtof(summaryData[1],NULL);
+            invoice->grossSum = strtof(summaryData[2],NULL);
+
+            addInvoice(invoiceList,invoice);
             index = 0;
             section = 1;
             continue;
@@ -77,8 +82,8 @@ void readData() {
 
                     if (string[i] == ' ' || i == strlen(string) - 1) {
                         length = i - start;
-                        memset(firstSectionData[index], 0, 50);
-                        strncpy(firstSectionData[index++], string + start, length);
+                        memset(invoiceData[index], 0, 50);
+                        strncpy(invoiceData[index++], string + start, length);
                         start = ++i;
                     }
                 }
@@ -109,7 +114,15 @@ void readData() {
                 break;
 
             case 3 :
+                for (int i = 0; i < strlen(string); ++i) {
 
+                    if (string[i] == ' ' || i == strlen(string) - 1) {
+                        length = i - start;
+                        memset(summaryData[index], 0, 50);
+                        strncpy(summaryData[index++], string + start, length);
+                        start = ++i;
+                    }
+                }
                 break;
             default:
                 break;
@@ -117,7 +130,7 @@ void readData() {
         start = 0;
     }
 
-    showInvoice(invoice);
+//    showInvoice(invoice);
 
     fclose(ptr);
 }

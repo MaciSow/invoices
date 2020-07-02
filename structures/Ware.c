@@ -24,18 +24,19 @@ void fillWare(struct Ware *ware, char name[150], char amount[10], char netPrice[
               char taxValue[15], char grossValue[15]) {
 
     strcpy(ware->name, name);
-    ware->amount = strtol(amount,NULL,10);
-    ware->netPrice = strtof(netPrice,NULL);
-    ware->netValue = strtof(netValue,NULL);
-    ware->tax = strtof(tax,NULL);
-    ware->taxValue = strtof(taxValue,NULL);
-    ware->grossValue = strtof(grossValue,NULL);
+    ware->amount = strtol(amount, NULL, 10);
+    ware->netPrice = strtof(netPrice, NULL);
+    ware->netValue = strtof(netValue, NULL);
+    ware->tax = strtof(tax, NULL);
+    ware->taxValue = strtof(taxValue, NULL);
+    ware->grossValue = strtof(grossValue, NULL);
 
     ware->wNext = NULL;
 }
 
-void showWare(struct Ware *ware) {
-    printf("%s\n %i \n %.2f \n %.2f \n %.2f \n %.2f \n %.2f \n",
+void showWare(struct Ware *ware, int i) {
+    printf("%4i. %-22s %11i %11.2f %11.2f %11.2f %11.2f %11.2f\n",
+           i,
            ware->name,
            ware->amount,
            ware->netPrice,

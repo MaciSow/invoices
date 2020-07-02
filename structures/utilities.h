@@ -3,7 +3,7 @@
 
 #include "Invoice.h"
 
-void readData();
+void readData(struct Invoice **invoiceList);
 
 void addInvoice(struct Invoice **invoiceList, struct Invoice *invoice);
 

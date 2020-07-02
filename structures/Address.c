@@ -21,7 +21,7 @@ void fillAddress(struct Address *address, char street[50], char homeNumber[10], 
 };
 
 void showAddress(struct Address *address) {
-    printf("%s %s\n%s\n%s\n",
+    printf("      %s %s\n      %s\n      %s\n",
            address->street,
            address->homeNumber,
            address->postalCode,
