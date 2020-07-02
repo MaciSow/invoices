@@ -15,7 +15,6 @@ createInvoice(char documentNumber[10], char date[20], float netSum, float taxSum
     strcpy(invoice.documentNumber, documentNumber);
     strcpy(invoice.date, date);
     invoice.netSum = netSum;
-    invoice.netSum = netSum;
     invoice.taxSum = taxSum;
     invoice.grossSum = grossSum;
     invoice.solder = solder;
@@ -33,7 +32,6 @@ struct Invoice createEmptyInvoice() {
     strcpy(invoice.documentNumber, "--");
     strcpy(invoice.date, "--");
     invoice.netSum = 0;
-    invoice.netSum = 0;
     invoice.taxSum = 0;
     invoice.grossSum = 0;
     invoice.solder = NULL;
@@ -44,6 +42,18 @@ struct Invoice createEmptyInvoice() {
     return invoice;
 }
 
+void fillInvoice(struct Invoice *invoice, struct Person *solder, struct Person *buyer, char documentNumber[10],
+                 char date[20], char netSum[15], char taxSum[15], char grossSum[15]) {
+    strcpy(invoice->documentNumber, documentNumber);
+    strcpy(invoice->date, date);
+    invoice->netSum = strtof(netSum,NULL);
+    invoice->taxSum = strtof(taxSum,NULL);
+    invoice->grossSum = strtof(grossSum,NULL);
+    invoice->solder = solder;
+    invoice->buyer = buyer;
+//    invoice->wHead = (struct Ware *) malloc(sizeof(struct Ware));
+    invoice->wHead = NULL;
+};
 
 void showInvoice(struct Invoice *invoice) {
     printf("\n\nInvoice nr: %s:\t", invoice->documentNumber);

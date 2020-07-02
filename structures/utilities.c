@@ -24,27 +24,35 @@ void readData() {
     char wareData[7][50];
 
     int section = 1;
-    int isWare = 0;
 
-    struct Invoice invoice;
+    struct Invoice *invoice;
     while (fgets(string, 50, (FILE *) ptr) != NULL) {
 
         if (checkString(string, "------")) {
 
-            struct Address addressSolder = createAddress(firstSectionData[6], firstSectionData[7], firstSectionData[8],
-                                                         firstSectionData[9]);
-            struct Address addressBuyer = createAddress(firstSectionData[14], firstSectionData[15],
-                                                        firstSectionData[16], firstSectionData[17]);
-            struct Person solder = createPerson(firstSectionData[2], firstSectionData[4], firstSectionData[5],
-                                                firstSectionData[3], &addressSolder);
-            struct Person buyer = createPerson(firstSectionData[10], firstSectionData[12], firstSectionData[13],
-                                               firstSectionData[11], &addressBuyer);
-            struct Person him;
+            struct Address *addressSolder;
+            addressSolder = (struct Address *) malloc(sizeof(struct Address));
+            fillAddress(addressSolder, firstSectionData[6], firstSectionData[7], firstSectionData[8],
+                        firstSectionData[9]);
 
-            printf("%p\n", &buyer);
-            printf("%p\n", &him);
+            struct Address *addressBuyer;
+            addressBuyer = (struct Address *) malloc(sizeof(struct Address));
+            fillAddress(addressBuyer, firstSectionData[14], firstSectionData[15],
+                        firstSectionData[16], firstSectionData[17]);
 
-            invoice = createInvoice(firstSectionData[0], firstSectionData[1], 0, 0, 0, &solder, &buyer);
+            struct Person *solder;
+            solder = (struct Person *) malloc(sizeof(struct Person));
+            fillPerson(solder, addressSolder, firstSectionData[2], firstSectionData[4], firstSectionData[5],
+                       firstSectionData[3]);
+
+            struct Person *buyer;
+            buyer = (struct Person *) malloc(sizeof(struct Person));
+            fillPerson(buyer, addressBuyer, firstSectionData[10], firstSectionData[12], firstSectionData[13],
+                       firstSectionData[11]);
+
+            invoice = (struct Invoice *) malloc(sizeof(struct Invoice));
+            printf("invoice: %p\n", invoice);
+            fillInvoice(invoice, solder, buyer, firstSectionData[0], firstSectionData[1], "0", "0", "0");
 
             section = 2;
             continue;
@@ -52,16 +60,12 @@ void readData() {
 
         if (checkString(string, "++++++")) {
             index = 0;
-            isWare = 0;
             section = 3;
             continue;
         }
 
         if (checkString(string, "######")) {
-
-
-
-            invoice.netSum = 15;
+//            invoice.netSum = 15;
             index = 0;
             section = 1;
             continue;
@@ -69,25 +73,18 @@ void readData() {
 
         switch (section) {
             case 1 :
-//                printf("case 1\n");
                 for (int i = 0; i < strlen(string); ++i) {
 
                     if (string[i] == ' ' || i == strlen(string) - 1) {
                         length = i - start;
-
                         memset(firstSectionData[index], 0, 50);
-
-                        strncpy(firstSectionData[index], string + start, length);
-
-                        index++;
+                        strncpy(firstSectionData[index++], string + start, length);
                         start = ++i;
                     }
                 }
-
                 break;
 
             case 2 :
-//                printf("case 2\n");
                 index = 0;
                 memset(wareData[index], 0, 50);
                 strncpy(wareData[index++], string, strlen(string) - 1);
@@ -97,24 +94,17 @@ void readData() {
                 for (int i = 0; i < strlen(string); ++i) {
                     if (string[i] == ' ' || i == strlen(string) - 1) {
                         length = i - start;
-
                         memset(wareData[index], 0, 50);
-
-                        strncpy(wareData[index], string + start, length);
-
-                        index++;
+                        strncpy(wareData[index++], string + start, length);
                         start = ++i;
                     }
                 }
 
                 struct Ware *ware;
-                ware = (struct Ware*) malloc(3 * sizeof(struct Ware));
-                for (int j = 0; j < 3; ++j) {
-                    printf("%p\n", ware+j);
-                }
-
-
-//                addWare(&invoice, &ware);
+                ware = (struct Ware *) malloc(sizeof(struct Ware));
+                fillWare(ware, wareData[0], wareData[1], wareData[2], wareData[3], wareData[4], wareData[5],
+                         wareData[6]);
+                addWare(invoice, ware);
 
                 break;
 
@@ -124,21 +114,10 @@ void readData() {
             default:
                 break;
         }
-
-
         start = 0;
     }
 
-//    printf("\nArray:\n");
-
-//    for (int j = 0; j < sizeof(firstSectionData) / sizeof(firstSectionData[0]); ++j) {
-//        printf("%i: %s\n", j, firstSectionData[j]);
-//    }
-//    for (int j = 0; j < sizeof(wareData) / sizeof(wareData[0]); ++j) {
-//        printf("%i: %s\n", j, wareData[j]);
-//    }
-
-    showInvoice(&invoice);
+    showInvoice(invoice);
 
     fclose(ptr);
 }
@@ -170,10 +149,9 @@ void showInvoiceList(struct Invoice *invoiceList) {
 
         invoiceList = invoiceList->iNext;
     } while (invoiceList != NULL);
-
 }
 
-int checkString(char *string, char *value) {
+int checkString(const char *string, char *value) {
     if (!strlen(value)) {
         return 0;
     }
@@ -184,24 +162,4 @@ int checkString(char *string, char *value) {
         }
     }
     return 1;
-};
-
-void readLine(char *string, char **words, int index) {
-
-//    int length;
-//    int start = 0;
-//
-//    for (int i = 0; i < strlen(string); ++i) {
-//
-//        if (string[i] == ' ' || i == strlen(string) - 1) {
-//            length = i - start;
-//
-//            strncpy(words[index], string + start, length);
-//
-//            index++;
-//            start = ++i;
-//        }
-//    }
-//
-//    start = 0;
 };

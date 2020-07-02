@@ -11,5 +11,5 @@ void showInvoiceList(struct Invoice *invoiceList);
 
 void readLine(char *string, char **words, int index);
 
-int checkString(char *string, char *value);
+int checkString(const char *string, char *value);
 #endif //INVOICE_UTILITIES_H

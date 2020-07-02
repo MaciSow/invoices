@@ -10,7 +10,7 @@ struct Address {
 
 struct Address createAddress(char street[50], char homeNumber[10], char postalCode[10], char city[50]);
 
-void fillAddress(struct Address *address, char data[4][50]);
+void fillAddress(struct Address *address, char street[50], char homeNumber[10], char postalCode[10], char city[50]);
 
 void showAddress(struct Address *address);
 

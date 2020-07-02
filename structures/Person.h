@@ -9,8 +9,13 @@ struct Person {
     struct Address *address;
 };
 
+
 struct Person createPerson(char companyName[50], char name[50], char surname[50], char nip[20], struct Address *address);
 
+void fillPerson(struct Person *person, struct Address *address, char companyName[50], char name[50], char surname[50], char nip[20]);
+
 void showPerson(struct Person *person);
+
+void deletePerson(struct Person *person);
 
 #endif //INVOICE_PERSON_H
