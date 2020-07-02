@@ -16,12 +16,20 @@ struct Person createPerson(char companyName[50], char name[50], char surname[50]
 };
 
 void showPerson(struct Person *person) {
-    printf("%s %s %s %s",
-            person->companyName,
-            person->name,
-            person->surname,
-            person->nip
-            );
+    if (strcmp(person->nip, "---") == 0) {
+        printf("%s\n%s %s",
+               person->companyName,
+               person->name,
+               person->surname
+        );
+    } else {
+        printf("%s\n%s %s\n%s",
+               person->companyName,
+               person->name,
+               person->surname,
+               person->nip
+        );
+    }
 
     printf("\n\nAdres:\n");
     showAddress(person->address);

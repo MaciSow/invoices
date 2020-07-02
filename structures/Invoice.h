@@ -15,9 +15,11 @@ struct Invoice {
 };
 
 
-
 struct Invoice
-createInvoice(char documentNumber[10], char date[20], float netSum, float taxSum, float grossSum, struct Person *solder, struct Person *buyer);
+createInvoice(char documentNumber[10], char date[20], float netSum, float taxSum, float grossSum, struct Person *solder,
+              struct Person *buyer);
+
+struct Invoice createEmptyInvoice();
 
 void showInvoice(struct Invoice *invoice);
 

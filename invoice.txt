@@ -1,1 +1,18 @@
-schabowy kotlet
+25165164 22.11.2020
+MarkoPOL 95157233541
+Marek Nowak
+Polna 37
+24-222 Opole
+Osoba_prywatna ---
+Stanislaw Gaska
+Slaska 22
+24-223 Opole
+----------------------
+kotlety schabowe
+143 50.00 50.00 23 15.55 65.99
+kotlety z piersi
+33 40.00 22.00 23 13.55 65.99
+rolady
+155 70.00 50.00 23 15.55 65.99
+++++++++++++++++++++++++++++++
+########################################

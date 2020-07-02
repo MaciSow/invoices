@@ -5,7 +5,6 @@
 #include "Ware.h"
 #include "Invoice.h"
 
-//todo make one way list with this 
 
 struct Invoice
 createInvoice(char documentNumber[10], char date[20], float netSum, float taxSum, float grossSum, struct Person *solder,
@@ -27,9 +26,28 @@ createInvoice(char documentNumber[10], char date[20], float netSum, float taxSum
     return invoice;
 }
 
+struct Invoice createEmptyInvoice() {
+
+    struct Invoice invoice;
+
+    strcpy(invoice.documentNumber, "--");
+    strcpy(invoice.date, "--");
+    invoice.netSum = 0;
+    invoice.netSum = 0;
+    invoice.taxSum = 0;
+    invoice.grossSum = 0;
+    invoice.solder = NULL;
+    invoice.buyer = NULL;
+    invoice.wHead = (struct Ware *) malloc(sizeof(struct Ware));
+    invoice.wHead = NULL;
+
+    return invoice;
+}
+
+
 void showInvoice(struct Invoice *invoice) {
     printf("\n\nInvoice nr: %s:\t", invoice->documentNumber);
-    printf("\n%s\n%f\n%f\n%f\n",
+    printf("\n%s\n%f\n%f\n%f",
            invoice->date,
            invoice->netSum,
            invoice->taxSum,
@@ -46,14 +64,13 @@ void showInvoice(struct Invoice *invoice) {
 
     if (invoice->wHead == NULL) {
         printf("List is empty");
-    } else {
-        struct Ware *current = invoice->wHead;
-
-        do {
-            showWare(current);
-            current = current->wNext;
-        } while (current != NULL);
+        return;
     }
+
+    do {
+        showWare(invoice->wHead);
+        invoice->wHead = invoice->wHead->wNext;
+    } while (invoice->wHead != NULL);
 }
 
 void addWare(struct Invoice *invoice, struct Ware *ware) {
