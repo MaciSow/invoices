@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "Ware.h"
 #include "utilities.h"
+#include "Input.h"
 
 struct Ware *createWare() {
     struct Ware *ware;

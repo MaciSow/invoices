@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "Address.h"
 #include "utilities.h"
+#include "Input.h"
 
 struct Address *createAddress() {
     struct Address *address;

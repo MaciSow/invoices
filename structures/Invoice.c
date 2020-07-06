@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "Address.h"
 #include "Person.h"
 #include "Ware.h"
 #include "Invoice.h"
+#include "InvoiceBox.h"
 #include "utilities.h"
-#include "Address.h"
+#include "Input.h"
 
 struct Invoice *createInvoice() {
     struct Invoice *invoice;
@@ -124,18 +126,7 @@ void getDataInvoice(struct Invoice *invoice) {
         invoice->paid = 0;
         printf("Payment deadline:\n [1] one week\n [2] two weeks\n [3] four weeks\nYour choice:");
 
-        int isInvalid;
-
-        do {
-            isInvalid = 0;
-            amountWeeks = strtol(readLine(2), NULL, 10);
-            if (!(amountWeeks > 0 && amountWeeks < 4)) {
-                isInvalid = 1;
-                printf("\nWrong data, try again:");
-            }
-
-        } while (isInvalid);
-
+        amountWeeks = repeatUntilSelectValid(3);
         amountWeeks = amountWeeks == 3 ? 4 : amountWeeks;
     }
     strcpy(invoice->paymentDeadline, getFutureDate("%d.%m.%Y", amountWeeks));
@@ -205,4 +196,16 @@ void calculateSumWares(struct Invoice *invoice) {
 
         tmp = tmp->wNext;
     }
+}
+
+void deleteInvoice(struct Invoice *invoice) {
+    deletePerson(invoice->solder);
+    deletePerson(invoice->buyer);
+
+    while (invoice->wHead){
+        struct Ware *tmp = invoice->wHead->wNext;
+        free(invoice->wHead);
+        invoice->wHead= tmp;
+    }
+    free(invoice);
 }

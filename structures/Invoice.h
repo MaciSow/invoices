@@ -29,14 +29,12 @@ char *formatAccountNumber(const char *accountNumber);
 
 void getDataInvoice(struct Invoice *invoice);
 
-int isNegative(char string[]);
-
-void issuingInvoice();
-
 void putWareList(struct Invoice *invoice);
 
 void calculateSumWares(struct Invoice *invoice);
 
 void issuingInvoice(struct Invoice **invoiceList);
+
+void deleteInvoice(struct Invoice *invoice);
 
 #endif //INVOICE_INVOICE_H

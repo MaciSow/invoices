@@ -4,6 +4,7 @@
 #include "Address.h"
 #include "Person.h"
 #include "utilities.h"
+#include "Input.h"
 
 struct Person *createPerson() {
     struct Person *person;

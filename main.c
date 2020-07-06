@@ -1,12 +1,11 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+
 #include "structures/Person.h"
 #include "structures/Ware.h"
 #include "structures/Invoice.h"
 #include "structures/Address.h"
-#include "structures/utilities.h"
+#include "structures/Input.h"
+#include "structures/InvoiceBox.h"
 
 int main() {
 
@@ -16,8 +15,17 @@ int main() {
     readData(&invoiceList);
 //    issuingInvoice(&invoiceList);
 
-    showInvoiceList(invoiceList);
-
+// funkcja
+    showShortInvoiceList(invoiceList);
+    struct Invoice *selectedInvoice = selectInvoice(invoiceList);
+    showInvoice(selectedInvoice);
+    invoiceOptions(invoiceList, selectedInvoice);
+//
+    showShortInvoiceList(invoiceList);
+    selectedInvoice = selectInvoice(invoiceList);
+    showInvoice(selectedInvoice);
+    invoiceOptions(invoiceList, selectedInvoice);
+//    end funkcja
     return 0;
 }
 
