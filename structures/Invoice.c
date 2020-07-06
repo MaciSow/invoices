@@ -10,6 +10,7 @@
 struct Invoice *createInvoice() {
     struct Invoice *invoice;
     invoice = (struct Invoice *) malloc(sizeof(struct Invoice));
+
     strcpy(invoice->documentNumber, strcat(getCurrentDate("%d/%m/%Y"), "/0001"));
     strcpy(invoice->date, getCurrentDate("%d.%m.%Y"));
     invoice->netSum = 0;
@@ -21,17 +22,13 @@ struct Invoice *createInvoice() {
 }
 
 void fillInvoice(struct Invoice *invoice, struct Person *solder, struct Person *buyer, char documentNumber[],
-                 char date[], char paymentDeadline[], char netSum[], char taxSum[], char grossSum[], char paid[]) {
+                 char date[], char paymentDeadline[], char paid[]) {
     strcpy(invoice->documentNumber, cutString(documentNumber, 20));
     strcpy(invoice->date, cutString(date, 20));
     strcpy(invoice->paymentDeadline, cutString(paymentDeadline, 20));
-    invoice->netSum = strtof(netSum, NULL);
-    invoice->taxSum = strtof(taxSum, NULL);
-    invoice->grossSum = strtof(grossSum, NULL);
     invoice->paid = strtof(paid, NULL);
     invoice->solder = solder;
     invoice->buyer = buyer;
-    invoice->wHead = NULL;
 };
 
 void showInvoice(struct Invoice *invoice) {

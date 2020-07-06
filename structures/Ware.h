@@ -14,8 +14,7 @@ struct Ware {
 
 struct Ware *createWare();
 
-void fillWare(struct Ware *ware, char name[], char amount[], char netPrice[], char netValue[], char tax[],
-              char taxValue[], char grossValue[]);
+void fillWare(struct Ware *ware, char name[], char amount[], char netPrice[], char tax[]);
 
 void showWare(struct Ware *ware, int i);
 

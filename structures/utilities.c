@@ -23,8 +23,8 @@ void readData(struct Invoice **invoiceList) {
     int index = 0;
     int start = 0;
     char invoiceData[19][50];
-    char wareData[7][50];
-    char summaryData[5][15];
+    char wareData[4][150];
+    char summaryData[2][15];
     int section = 1;
     struct Invoice *invoice;
 
@@ -32,28 +32,24 @@ void readData(struct Invoice **invoiceList) {
 
         if (checkString(string, "------")) {
 
-            struct Address *addressSolder;
-            addressSolder = (struct Address *) malloc(sizeof(struct Address));
+            struct Address *addressSolder = createAddress();
             fillAddress(addressSolder, invoiceData[7], invoiceData[8], invoiceData[9],
                         invoiceData[10]);
 
-            struct Address *addressBuyer;
-            addressBuyer = (struct Address *) malloc(sizeof(struct Address));
+            struct Address *addressBuyer = createAddress();
             fillAddress(addressBuyer, invoiceData[15], invoiceData[16],
                         invoiceData[17], invoiceData[18]);
 
-            struct Person *solder;
-            solder = (struct Person *) malloc(sizeof(struct Person));
+            struct Person *solder = createPerson();
             fillPerson(solder, addressSolder, invoiceData[2], invoiceData[4], invoiceData[5],
                        invoiceData[3], invoiceData[6]);
 
-            struct Person *buyer;
-            buyer = (struct Person *) malloc(sizeof(struct Person));
+            struct Person *buyer = createPerson();
             fillPerson(buyer, addressBuyer, invoiceData[11], invoiceData[13], invoiceData[14],
                        invoiceData[12], "");
 
-            invoice = (struct Invoice *) malloc(sizeof(struct Invoice));
-            fillInvoice(invoice, solder, buyer, invoiceData[0], invoiceData[1], "0", "0", "0", "", "0");
+            invoice = createInvoice();
+            fillInvoice(invoice, solder, buyer, invoiceData[0], invoiceData[1], "", "0");
 
             section = 2;
             continue;
@@ -66,11 +62,9 @@ void readData(struct Invoice **invoiceList) {
         }
 
         if (checkString(string, "######")) {
-            invoice->netSum = strtof(summaryData[0], NULL);
-            invoice->taxSum = strtof(summaryData[1], NULL);
-            invoice->grossSum = strtof(summaryData[2], NULL);
-            strcpy(invoice->paymentDeadline, summaryData[3]);
-            invoice->paid = strtof(summaryData[4], NULL);
+            calculateSumWares(invoice);
+            strcpy(invoice->paymentDeadline, summaryData[0]);
+            invoice->paid = strtof(summaryData[1], NULL);
 
             addInvoice(invoiceList, invoice);
             counter++;
@@ -108,10 +102,9 @@ void readData(struct Invoice **invoiceList) {
                     }
                 }
 
-                struct Ware *ware;
-                ware = (struct Ware *) malloc(sizeof(struct Ware));
-                fillWare(ware, wareData[0], wareData[1], wareData[2], wareData[3], wareData[4], wareData[5],
-                         wareData[6]);
+                struct Ware *ware = createWare();
+
+                fillWare(ware, wareData[0], wareData[1], wareData[2], wareData[3]);
                 addWare(invoice, ware);
 
                 break;
