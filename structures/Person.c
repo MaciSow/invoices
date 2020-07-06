@@ -3,32 +3,32 @@
 #include <string.h>
 #include "Address.h"
 #include "Person.h"
+#include "utilities.h"
 
-struct Person
-createPerson(char companyName[50], char name[50], char surname[50], char nip[20], struct Address *address) {
-    struct Person person;
+struct Person *createPerson() {
+    struct Person *person;
+    person = (struct Person *) malloc(sizeof(struct Person));
 
-    strcpy(person.companyName, companyName);
-    strcpy(person.name, name);
-    strcpy(person.surname, surname);
-    strcpy(person.nip, nip);
-    person.address = address;
+    strcpy(person->companyName, "Osoba_prywatna");
+    strcpy(person->nip, "---");
+    strcpy(person->accountNumber, "---");
+    person->address = NULL;
+
     return person;
+}
 
-};
-
-void fillPerson(struct Person *person, struct Address *address, char companyName[50], char name[50], char surname[50],
-                char nip[20], char accountNumber[30]) {
-    strcpy(person->companyName, companyName);
-    strcpy(person->name, name);
-    strcpy(person->surname, surname);
-    strcpy(person->nip, nip);
-    strcpy(person->accountNumber, accountNumber);
+void fillPerson(struct Person *person, struct Address *address, char companyName[], char name[], char surname[],
+                char nip[], char accountNumber[]) {
+    strcpy(person->companyName, cutString(companyName,50));
+    strcpy(person->name, cutString(name,50));
+    strcpy(person->surname, cutString(surname,50));
+    strcpy(person->nip, cutString(nip,11));
+    strcpy(person->accountNumber, cutString(accountNumber,27));
     person->address = address;
 }
 
 void showPerson(struct Person *person) {
-    if (strcmp(person->nip, "---") == 0) {
+    if (!strcmp(person->nip, "---")) {
         printf("    %s %s",
                person->name,
                person->surname
@@ -49,5 +49,37 @@ void showPerson(struct Person *person) {
 void deletePerson(struct Person *person) {
     free(person->address);
     free(person);
+}
+
+void getDataPerson(struct Person *person, int isSolder) {
+    char isCompany;
+
+
+    if (isSolder) {
+        printf("\nSolder\n");
+    } else {
+        printf("\nBuyer\nDo you have company? [Y/n]:");
+        isCompany = (char) readLine(2)[0];
+    }
+
+    if (isSolder || isCompany == '\n' || isCompany == 'Y' || isCompany == 'y') {
+
+        printf("Company name:");
+        strcpy(person->companyName, readLine(50));
+
+        printf("NIP:");
+        strcpy(person->nip, readLine(11));
+    }
+
+    printf("Name:");
+    strcpy(person->name, readLine(50));
+
+    printf("Surname:");
+    strcpy(person->surname, readLine(50));
+
+    if (isSolder) {
+        printf("Account Number:");
+        strcpy(person->accountNumber, readLine(27));
+    }
 }
 

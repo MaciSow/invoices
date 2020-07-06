@@ -4,50 +4,27 @@
 #include "Person.h"
 #include "Ware.h"
 #include "Invoice.h"
+#include "utilities.h"
+#include "Address.h"
 
-
-struct Invoice
-createInvoice(char documentNumber[10], char date[20], float netSum, float taxSum, float grossSum, struct Person *solder,
-              struct Person *buyer) {
-
-    struct Invoice invoice;
-
-    strcpy(invoice.documentNumber, documentNumber);
-    strcpy(invoice.date, date);
-    invoice.netSum = netSum;
-    invoice.taxSum = taxSum;
-    invoice.grossSum = grossSum;
-    invoice.solder = solder;
-    invoice.buyer = buyer;
-    invoice.wHead = (struct Ware *) malloc(sizeof(struct Ware));
-    invoice.wHead = NULL;
+struct Invoice *createInvoice() {
+    struct Invoice *invoice;
+    invoice = (struct Invoice *) malloc(sizeof(struct Invoice));
+    strcpy(invoice->documentNumber, strcat(getCurrentDate("%d/%m/%Y"), "/0001"));
+    strcpy(invoice->date, getCurrentDate("%d.%m.%Y"));
+    invoice->netSum = 0;
+    invoice->taxSum = 0;
+    invoice->grossSum = 0;
+    invoice->wHead = NULL;
 
     return invoice;
 }
 
-struct Invoice createEmptyInvoice() {
-
-    struct Invoice invoice;
-
-    strcpy(invoice.documentNumber, "--");
-    strcpy(invoice.date, "--");
-    invoice.netSum = 0;
-    invoice.taxSum = 0;
-    invoice.grossSum = 0;
-    invoice.solder = NULL;
-    invoice.buyer = NULL;
-    invoice.wHead = (struct Ware *) malloc(sizeof(struct Ware));
-    invoice.wHead = NULL;
-
-    return invoice;
-}
-
-void fillInvoice(struct Invoice *invoice, struct Person *solder, struct Person *buyer, char documentNumber[10],
-                 char date[20], char paymentDeadline[20], char netSum[15], char taxSum[15], char grossSum[15],
-                 char paid[15]) {
-    strcpy(invoice->documentNumber, documentNumber);
-    strcpy(invoice->date, date);
-    strcpy(invoice->paymentDeadline, paymentDeadline);
+void fillInvoice(struct Invoice *invoice, struct Person *solder, struct Person *buyer, char documentNumber[],
+                 char date[], char paymentDeadline[], char netSum[], char taxSum[], char grossSum[], char paid[]) {
+    strcpy(invoice->documentNumber, cutString(documentNumber, 20));
+    strcpy(invoice->date, cutString(date, 20));
+    strcpy(invoice->paymentDeadline, cutString(paymentDeadline, 20));
     invoice->netSum = strtof(netSum, NULL);
     invoice->taxSum = strtof(taxSum, NULL);
     invoice->grossSum = strtof(grossSum, NULL);
@@ -71,15 +48,17 @@ void showInvoice(struct Invoice *invoice) {
     printf("%5s|%14s%10s%10s|%11s|%11s|%11s|%11s|%11s\n", "No.", "Name", "|", "Amount", "Net Price", "Net Val", "Tax",
            "Tax Val", "Gross Val");
     printf("----------------------------------------------------------------------------------------------------\n");
+
     if (invoice->wHead == NULL) {
         printf("List is empty");
-        return;
+    } else {
+        int i = 1;
+        do {
+            showWare(invoice->wHead, i++);
+            invoice->wHead = invoice->wHead->wNext;
+        } while (invoice->wHead != NULL);
     }
-    int i = 1;
-    do {
-        showWare(invoice->wHead, i++);
-        invoice->wHead = invoice->wHead->wNext;
-    } while (invoice->wHead != NULL);
+
     printf("\n%100s\n", "---------------------------------------");
     printf("%65s%11s|%11s|%11s\n", "Sum:", "Net", "Tax", "Gross");
     printf("%100s\n", "---------------------------------------");
@@ -93,7 +72,7 @@ void showInvoice(struct Invoice *invoice) {
            "Payment Deadline:",
            invoice->paymentDeadline,
            "Paid:",
-           invoice->paid
+           invoice->paid ? invoice->grossSum : 0
     );
     printf("\n====================================================================================================\n");
 }
@@ -132,5 +111,101 @@ char *formatAccountNumber(const char *accountNumber) {
     }
 
     return correctFormat;
+}
 
+void getDataInvoice(struct Invoice *invoice) {
+    char choose;
+    int amountWeeks;
+
+    printf("Is paid? [Y/n]:");
+    choose = (char) readLine(2)[0];
+
+    if (choose == '\n' || choose == 'Y' || choose == 'y') {
+        invoice->paid = 1;
+        amountWeeks = 0;
+    } else {
+        invoice->paid = 0;
+        printf("Payment deadline:\n [1] one week\n [2] two weeks\n [3] four weeks\nYour choice:");
+
+        int isInvalid;
+
+        do {
+            isInvalid = 0;
+            amountWeeks = strtol(readLine(2), NULL, 10);
+            if (!(amountWeeks > 0 && amountWeeks < 4)) {
+                isInvalid = 1;
+                printf("\nWrong data, try again:");
+            }
+
+        } while (isInvalid);
+
+        amountWeeks = amountWeeks == 3 ? 4 : amountWeeks;
+    }
+    strcpy(invoice->paymentDeadline, getFutureDate("%d.%m.%Y", amountWeeks));
+
+}
+
+void issuingInvoice(struct Invoice **invoiceList) {
+    struct Invoice *invoice = createInvoice();
+    struct Person *solder = createPerson();
+    struct Person *buyer = createPerson();
+    struct Address *addressSolder = createAddress();
+    struct Address *addressBuyer = createAddress();
+
+    getDataInvoice(invoice);
+
+    getDataPerson(solder, 1);
+    getDataAddress(addressSolder);
+
+    getDataPerson(buyer, 0);
+    getDataAddress(addressBuyer);
+
+    solder->address = addressSolder;
+    invoice->solder = solder;
+
+    buyer->address = addressBuyer;
+    invoice->buyer = buyer;
+
+    putWareList(invoice);
+    calculateSumWares(invoice);
+
+    addInvoice(invoiceList, invoice);
+}
+
+void putWareList(struct Invoice *invoice) {
+    int isEnd;
+    char choose;
+
+    do {
+        printf("\nWare\n");
+        isEnd = 0;
+
+        struct Ware *ware = createWare();
+        getDataWare(ware);
+        calculateValuesWare(ware);
+        addWare(invoice, ware);
+
+        printf("\nAdd another ware? [Y/n]:");
+        choose = (char) readLine(2)[0];
+
+        if (choose == '\n' || strlwr(&choose)[0] == 'y') {
+            isEnd = 1;
+        }
+
+    } while (isEnd);
+}
+
+void calculateSumWares(struct Invoice *invoice) {
+    if (invoice->wHead == NULL) {
+        return;
+    }
+    struct Ware *tmp = invoice->wHead;
+
+    while (tmp) {
+        invoice->netSum += tmp->netValue;
+        invoice->taxSum += tmp->taxValue;
+        invoice->grossSum += tmp->grossValue;
+
+        tmp = tmp->wNext;
+    }
 }

@@ -12,12 +12,15 @@ struct Ware {
     struct Ware *wNext;
 };
 
-struct Ware
-createWare(char name[70], int amount, float netPrice, float netValue, float tax, float taxValue, float grossValue);
+struct Ware *createWare();
 
-void fillWare(struct Ware *ware, char name[150], char amount[10], char netPrice[15], char netValue[15], char tax[10],
-              char taxValue[15], char grossValue[15]);
+void fillWare(struct Ware *ware, char name[], char amount[], char netPrice[], char netValue[], char tax[],
+              char taxValue[], char grossValue[]);
 
 void showWare(struct Ware *ware, int i);
+
+void getDataWare(struct Ware *ware);
+
+void calculateValuesWare (struct Ware *ware);
 
 #endif //INVOICE_WARE_H

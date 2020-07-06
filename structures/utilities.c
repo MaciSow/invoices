@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -44,15 +45,15 @@ void readData(struct Invoice **invoiceList) {
             struct Person *solder;
             solder = (struct Person *) malloc(sizeof(struct Person));
             fillPerson(solder, addressSolder, invoiceData[2], invoiceData[4], invoiceData[5],
-                       invoiceData[3],invoiceData[6]);
+                       invoiceData[3], invoiceData[6]);
 
             struct Person *buyer;
             buyer = (struct Person *) malloc(sizeof(struct Person));
             fillPerson(buyer, addressBuyer, invoiceData[11], invoiceData[13], invoiceData[14],
-                       invoiceData[12],"");
+                       invoiceData[12], "");
 
             invoice = (struct Invoice *) malloc(sizeof(struct Invoice));
-            fillInvoice(invoice, solder, buyer, invoiceData[0], invoiceData[1], "0", "0", "0","","0");
+            fillInvoice(invoice, solder, buyer, invoiceData[0], invoiceData[1], "0", "0", "0", "", "0");
 
             section = 2;
             continue;
@@ -65,13 +66,13 @@ void readData(struct Invoice **invoiceList) {
         }
 
         if (checkString(string, "######")) {
-            invoice->netSum = strtof(summaryData[0],NULL);
-            invoice->taxSum = strtof(summaryData[1],NULL);
-            invoice->grossSum = strtof(summaryData[2],NULL);
-            strcpy(invoice->paymentDeadline,summaryData[3]);
-            invoice->paid = strtof(summaryData[4],NULL);
+            invoice->netSum = strtof(summaryData[0], NULL);
+            invoice->taxSum = strtof(summaryData[1], NULL);
+            invoice->grossSum = strtof(summaryData[2], NULL);
+            strcpy(invoice->paymentDeadline, summaryData[3]);
+            invoice->paid = strtof(summaryData[4], NULL);
 
-            addInvoice(invoiceList,invoice);
+            addInvoice(invoiceList, invoice);
             counter++;
             index = 0;
             section = 1;
@@ -176,3 +177,103 @@ int checkString(const char *string, char *value) {
     }
     return 1;
 };
+
+char *cutString(const char *string, int length) {
+    char *cutString = malloc(length);
+    memset(cutString, '\0', length);
+
+    for (int i = 0; i < length - 1; ++i) {
+        cutString[i] = string[i];
+    }
+
+    cutString[length - 1] = '\0';
+
+    return cutString;
+}
+
+char *getCurrentDate(char dateFormat[]) {
+    time_t now;
+    time(&now);
+
+    char *date = malloc(11);
+    memset(date, '\0', 11);
+
+//    struct tm *local = localtime(&now);
+//    struct tm localTime = {
+//            .tm_year=local->tm_year,
+//            .tm_mon=local->tm_mon,
+//            .tm_mday=local->tm_mday
+//    };
+
+    struct tm local = *localtime(&now);
+    strftime(date, 11, dateFormat, &local);
+
+    return date;
+};
+
+char *getFutureDate(char dateFormat[], int weeks) {
+    time_t now;
+    time(&now);
+
+    char *date = malloc(11);
+    memset(date, '\0', 11);
+
+    struct tm local = *localtime(&now);
+
+    local.tm_sec += weeks * 604800;
+
+    mktime(&local);
+
+    strftime(date, 11, dateFormat, &local);
+
+    return date;
+};
+
+int isNegative(char string[]) {
+    float number = strtof(string, NULL);
+    return number > 0 ? 0 : 1;
+}
+
+float repeatUntilValid() {
+    float value;
+    int isInvalid;
+    char string[15];
+
+    do {
+        isInvalid = 0;
+        strcpy(string, readLine(15));
+
+        if (isNegative(string)) {
+            isInvalid = 1;
+            printf("    - wrong data, try again:");
+        }
+    } while (isInvalid);
+
+    value = strtof(string, NULL);
+    return value;
+}
+
+char *readLine(int length) {
+    char *str = malloc(length);
+    memset(str, '\0', length);
+
+    char letter;
+    do {
+        letter = (char) getchar();
+    } while (letter == '\n');
+
+    int i = 0;
+
+    while (letter != '\n') {
+
+        if (i < length - 1) {
+            str[i] = letter;
+        }
+
+        i++;
+        letter = (char) getchar();
+    }
+
+    str[length - 1] = '\0';
+    return str;
+}

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "structures/Person.h"
 #include "structures/Ware.h"
 #include "structures/Invoice.h"
@@ -13,13 +14,13 @@ int main() {
     invoiceList = NULL;
 
     readData(&invoiceList);
+//    issuingInvoice(&invoiceList);
 
     showInvoiceList(invoiceList);
 
     return 0;
 }
 
-// todo * wystawienie faktury (funckje odczytujące dane z konsoli w osobnych strukturach)
 // todo * anulowanie faktury
 // todo * korekta faktury
 // todo * wyszukanie faktury (po dacie)

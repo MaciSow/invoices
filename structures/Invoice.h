@@ -2,7 +2,7 @@
 #define INVOICE_INVOICE_H
 
 struct Invoice {
-    char documentNumber[10];
+    char documentNumber[20];
     char date[20];
     char paymentDeadline[20];
     float netSum;
@@ -16,20 +16,27 @@ struct Invoice {
 
 };
 
+struct Invoice *createInvoice();
 
-struct Invoice
-createInvoice(char documentNumber[10], char date[20], float netSum, float taxSum, float grossSum, struct Person *solder,
-              struct Person *buyer);
-
-struct Invoice createEmptyInvoice();
-
-void fillInvoice(struct Invoice *invoice, struct Person *solder, struct Person *buyer, char documentNumber[10],
-                 char date[20], char paymentDeadline[20], char netSum[15], char taxSum[15], char grossSum[15], char paid[15]);
+void fillInvoice(struct Invoice *invoice, struct Person *solder, struct Person *buyer, char documentNumber[],
+                 char date[], char paymentDeadline[], char netSum[], char taxSum[], char grossSum[], char paid[]);
 
 void showInvoice(struct Invoice *invoice);
 
 void addWare(struct Invoice *invoice, struct Ware *ware);
 
 char *formatAccountNumber(const char *accountNumber);
+
+void getDataInvoice(struct Invoice *invoice);
+
+int isNegative(char string[]);
+
+void issuingInvoice();
+
+void putWareList(struct Invoice *invoice);
+
+void calculateSumWares(struct Invoice *invoice);
+
+void issuingInvoice(struct Invoice **invoiceList);
 
 #endif //INVOICE_INVOICE_H
