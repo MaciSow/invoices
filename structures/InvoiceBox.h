@@ -15,4 +15,6 @@ void deleteInvoiceFromList(struct Invoice *invoiceList, struct Invoice *invoice)
 
 void invoiceOptions(struct Invoice *invoiceList, struct Invoice *invoice);
 
+void invoiceEditOptions(struct Invoice *invoice);
+
 #endif //INVOICE_INVOICEBOX_H

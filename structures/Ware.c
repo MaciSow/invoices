@@ -53,3 +53,7 @@ void calculateValuesWare(struct Ware *ware) {
     ware->grossValue = ware->netValue + ware->taxValue;
 }
 
+void editWare(struct Ware *ware){
+    getDataWare(ware);
+    calculateValuesWare(ware);
+}

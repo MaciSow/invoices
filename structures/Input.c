@@ -5,9 +5,9 @@
 #include "Person.h"
 #include "Ware.h"
 #include "Invoice.h"
-#include "utilities.h"
-#include "Input.h"
 #include "InvoiceBox.h"
+#include "Input.h"
+#include "utilities.h"
 
 void readData(struct Invoice **invoiceList) {
     char string[255];

@@ -16,4 +16,6 @@ void showAddress(struct Address *address);
 
 void getDataAddress(struct Address *address);
 
+void editAddress(struct Address *address);
+
 #endif //INVOICE_ADDRESS_H

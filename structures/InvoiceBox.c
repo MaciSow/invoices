@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "Address.h"
+#include "Person.h"
 #include "Invoice.h"
 #include "InvoiceBox.h"
 #include "Input.h"
@@ -26,11 +28,13 @@ void showInvoiceList(struct Invoice *invoiceList) {
         return;
     }
 
-    do {
-        showInvoice(invoiceList);
+    struct Invoice *tmp = invoiceList;
 
-        invoiceList = invoiceList->iNext;
-    } while (invoiceList != NULL);
+    do {
+        showInvoice(tmp);
+
+        tmp = tmp->iNext;
+    } while (tmp != NULL);
 }
 
 void showShortInvoiceList(struct Invoice *invoiceList) {
@@ -39,15 +43,17 @@ void showShortInvoiceList(struct Invoice *invoiceList) {
         printf("List is empty");
         return;
     }
+
     int counter = 1;
+    struct Invoice *tmp = invoiceList;
 
     do {
-        printf("[ %2i ] - %s\n", counter, invoiceList->documentNumber);
+        printf("[ %2i ] - %s\n", counter, tmp->documentNumber);
 
-        invoiceList = invoiceList->iNext;
+        tmp = tmp->iNext;
         counter++;
-    } while (invoiceList != NULL);
-    printf("\n------------------------\n");
+    } while (tmp != NULL);
+    printf("------------------------\n");
 }
 
 struct Invoice *selectInvoice(struct Invoice *invoiceList) {
@@ -58,11 +64,12 @@ struct Invoice *selectInvoice(struct Invoice *invoiceList) {
 
     int counter = 1;
 
+    struct Invoice *tmp = invoiceList;
     while (counter != choose) {
-        invoiceList = invoiceList->iNext;
+        tmp = tmp->iNext;
         counter++;
     }
-    return invoiceList;
+    return tmp;
 }
 
 void deleteInvoiceFromList(struct Invoice *invoiceList, struct Invoice *invoice) {
@@ -101,39 +108,90 @@ void deleteInvoiceFromList(struct Invoice *invoiceList, struct Invoice *invoice)
         }
         tmp = tmp->iNext;
     }
-
 }
 
 int lengthInvoiceList(struct Invoice *invoiceList) {
     if (invoiceList == NULL) {
         return 0;
     }
+
     int counter = 0;
+    struct Invoice *tmp = invoiceList;
 
     do {
-        invoiceList = invoiceList->iNext;
+        tmp = tmp->iNext;
         counter++;
-    } while (invoiceList != NULL);
+    } while (tmp != NULL);
 
     return counter;
 }
 
 void invoiceOptions(struct Invoice *invoiceList, struct Invoice *invoice) {
-
-
-    printf("\nWhat next?\n [1] Edit\n [2] Delete\n [3] Back\nYour choice:");
+    printf("\nWhat next?\n "
+           "[1] Edit\n "
+           "[2] Delete\n "
+           "[3] Back\n"
+           "Your choice:");
 
     int select = repeatUntilSelectValid(3);
 
     switch (select) {
         case 1 :
+            invoiceEditOptions(invoice);
             break;
         case 2:
             deleteInvoiceFromList(invoiceList, invoice);
             break;
-        case 3:
-            break;
         default:
             break;
+    }
+}
+
+void invoiceEditOptions(struct Invoice *invoice) {
+    int isClose = 0;
+
+    while (!isClose) {
+        printf("\nWhat Edit?\n [1] Invoice data\n [2] Solder data\n [3] Solder address\n "
+               "[4] Buyer data\n [5] Buyer address\n [6] Ware data\n [7] Back\n"
+               "Your choice:");
+
+        int select = repeatUntilSelectValid(7);
+
+        switch (select) {
+            case 1 :
+                printf("Edit invoice data:\n");
+                editInvoice(invoice);
+                break;
+            case 2:
+                printf("Edit solder data:\n");
+                editPerson(invoice->solder, 1);
+                break;
+            case 3:
+                printf("Edit solder address:\n");
+                editAddress(invoice->solder->address);
+                break;
+            case 4 :
+                printf("Edit buyer data:\n");
+                editPerson(invoice->buyer, 0);
+                break;
+            case 5:
+                printf("Edit buyer address:\n");
+                editAddress(invoice->buyer->address);
+                break;
+            case 6:
+                printf("Edit wares:\n");
+                showWareList(invoice);
+                struct Ware *selectedWare = selectWare(invoice);
+                wareOptions(invoice,selectedWare);
+                calculateSumWares(invoice);
+                break;
+            default:
+                isClose = 1;
+                break;
+        }
+        if (!isClose) {
+            printf("Edited successful");
+            showInvoice(invoice);
+        }
     }
 }

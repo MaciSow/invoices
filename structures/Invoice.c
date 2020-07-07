@@ -52,10 +52,11 @@ void showInvoice(struct Invoice *invoice) {
         printf("List is empty");
     } else {
         int i = 1;
+        struct Ware *tmp = invoice->wHead;
         do {
-            showWare(invoice->wHead, i++);
-            invoice->wHead = invoice->wHead->wNext;
-        } while (invoice->wHead != NULL);
+            showWare(tmp, i++);
+            tmp = tmp->wNext;
+        } while (tmp != NULL);
     }
 
     printf("\n%100s\n", "---------------------------------------");
@@ -184,9 +185,14 @@ void putWareList(struct Invoice *invoice) {
 }
 
 void calculateSumWares(struct Invoice *invoice) {
+    invoice->netSum = 0;
+    invoice->taxSum = 0;
+    invoice->grossSum = 0;
+
     if (invoice->wHead == NULL) {
         return;
     }
+
     struct Ware *tmp = invoice->wHead;
 
     while (tmp) {
@@ -202,10 +208,126 @@ void deleteInvoice(struct Invoice *invoice) {
     deletePerson(invoice->solder);
     deletePerson(invoice->buyer);
 
-    while (invoice->wHead){
+    while (invoice->wHead) {
         struct Ware *tmp = invoice->wHead->wNext;
         free(invoice->wHead);
-        invoice->wHead= tmp;
+        invoice->wHead = tmp;
     }
     free(invoice);
+}
+
+void editInvoice(struct Invoice *invoice) {
+    getDataInvoice(invoice);
+    char choose;
+    printf("Do you want change to current date[Y/n]:");
+    choose = (char) readLine(2)[0];
+
+    if (choose == '\n' || choose == 'Y' || choose == 'y') {
+        strcpy(invoice->date, getCurrentDate("%d.%m.%Y"));
+    }
+}
+
+void wareOptions(struct Invoice *invoice, struct Ware *ware) {
+    printf("\nWhat next?\n "
+           "[1] Edit\n "
+           "[2] Delete\n "
+           "[3] Back\n"
+           "Your choice:");
+
+    int select = repeatUntilSelectValid(3);
+
+    switch (select) {
+        case 1 :
+            editWare(ware);
+            break;
+        case 2:
+            deleteWareFromList(invoice, ware);
+            break;
+        default:
+            break;
+    }
+
+}
+
+void showWareList(struct Invoice *invoice) {
+    if (invoice->wHead == NULL) {
+        printf("List is empty");
+    } else {
+        int counter = 1;
+        struct Ware *tmp = invoice->wHead;
+        do {
+            printf("[ %2i ] - %s\n", counter++, tmp->name);
+            tmp = tmp->wNext;
+        } while (tmp != NULL);
+    }
+}
+
+struct Ware *selectWare(struct Invoice *invoice) {
+    printf("\nGet item number: ");
+
+    int length = lengthWareList(invoice->wHead);
+    int choose = repeatUntilSelectValid(length);
+
+    int counter = 1;
+    struct Ware *tmp = invoice->wHead;
+
+    while (counter != choose) {
+        tmp = tmp->wNext;
+        counter++;
+    }
+    return tmp;
+}
+
+int lengthWareList(struct Ware *ware) {
+    if (ware == NULL) {
+        return 0;
+    }
+
+    int counter = 0;
+    struct Ware *tmp = ware;
+
+    do {
+        tmp = tmp->wNext;
+        counter++;
+    } while (tmp != NULL);
+
+    return counter;
+}
+
+void deleteWareFromList(struct Invoice *invoice, struct Ware *ware) {
+
+    if (ware->wNext == NULL && ware == invoice->wHead) {
+        invoice->wHead = NULL;
+        free(ware);
+        return;
+    }
+
+    if (ware == invoice->wHead) {
+        invoice->wHead = ware->wNext;
+        free(ware);
+        return;
+    }
+
+    struct Ware *tmp = invoice->wHead;
+
+    if (ware->wNext == NULL) {
+
+        while (tmp) {
+            if (tmp->wNext == ware) {
+                tmp->wNext = NULL;
+                free(ware);
+                return;
+            }
+            tmp = tmp->wNext;
+        }
+    }
+
+    while (tmp) {
+        if (tmp->wNext == ware) {
+            tmp->wNext = ware->wNext;
+            free(ware);
+            return;
+        }
+        tmp = tmp->wNext;
+    }
 }

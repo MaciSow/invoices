@@ -22,4 +22,6 @@ void getDataWare(struct Ware *ware);
 
 void calculateValuesWare (struct Ware *ware);
 
+void editWare(struct Ware *ware);
+
 #endif //INVOICE_WARE_H

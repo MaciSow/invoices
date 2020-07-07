@@ -40,3 +40,7 @@ void getDataAddress(struct Address *address) {
     printf("City:");
     strcpy(address->city, readLine(50));
 }
+
+void editAddress(struct Address *address){
+    getDataAddress(address);
+}

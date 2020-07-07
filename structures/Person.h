@@ -22,4 +22,6 @@ void deletePerson(struct Person *person);
 
 void getDataPerson(struct Person *person, int isSolder);
 
+void editPerson(struct Person *person, int isSolder);
+
 #endif //INVOICE_PERSON_H

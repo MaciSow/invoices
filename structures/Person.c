@@ -84,3 +84,6 @@ void getDataPerson(struct Person *person, int isSolder) {
     }
 }
 
+void editPerson(struct Person *person, int isSolder){
+    getDataPerson(person, isSolder);
+}

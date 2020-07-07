@@ -37,4 +37,16 @@ void issuingInvoice(struct Invoice **invoiceList);
 
 void deleteInvoice(struct Invoice *invoice);
 
+void editInvoice(struct Invoice *invoice);
+
+void wareOptions(struct Invoice *invoice, struct Ware *ware);
+
+void showWareList(struct Invoice *invoice);
+
+struct Ware *selectWare(struct Invoice *invoice);
+
+int lengthWareList(struct Ware *ware);
+
+void deleteWareFromList(struct Invoice *invoice, struct Ware *ware);
+
 #endif //INVOICE_INVOICE_H
