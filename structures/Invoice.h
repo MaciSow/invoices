@@ -49,4 +49,6 @@ int lengthWareList(struct Ware *ware);
 
 void deleteWareFromList(struct Invoice *invoice, struct Ware *ware);
 
+char* generateUniqueID(struct Invoice *invoiceList);
+
 #endif //INVOICE_INVOICE_H

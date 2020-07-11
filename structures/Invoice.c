@@ -263,7 +263,7 @@ void showWareList(struct Invoice *invoice) {
 }
 
 struct Ware *selectWare(struct Invoice *invoice) {
-    printf("\nGet item number: ");
+    printf("Get item number: ");
 
     int length = lengthWareList(invoice->wHead);
     int choose = repeatUntilSelectValid(length);
@@ -330,4 +330,48 @@ void deleteWareFromList(struct Invoice *invoice, struct Ware *ware) {
         }
         tmp = tmp->wNext;
     }
+}
+
+char *generateUniqueID(struct Invoice *invoiceList) {
+    char *uniqueId = malloc(16);
+    memset(uniqueId, '\0', 16);
+    strcpy(uniqueId, getCurrentDate("%d/%m/%Y"));
+//    strcat(date, "/0000");
+
+//    strcpy(date, cutString(date,  16));
+//    printf("%s", date);
+
+    if (invoiceList == NULL) {
+        strcat(uniqueId, "/0000");
+        return uniqueId;
+    }
+
+    int id = 0;
+    struct Invoice *tmp = invoiceList;
+
+    do {
+        char current[11];
+        strncpy(current, tmp->documentNumber, 10);
+        current[10] = '\0';
+
+        if (checkString(uniqueId, current)) {
+            int currentId = 0;
+            char currentIdString[5];
+
+            strncpy(currentIdString, tmp->documentNumber + 11, 4);
+            currentIdString[4] = '\0';
+
+            currentId = strtol(currentIdString, NULL, 10);
+            id = id <= currentId ? currentId + 1 : id;
+        }
+        tmp = tmp->iNext;
+    } while (tmp != NULL);
+
+    char idString[5];
+    strcat(uniqueId, "/");
+    sprintf(idString, "%04d", id);
+    strcat(uniqueId, idString);
+    return uniqueId;
+
+
 }

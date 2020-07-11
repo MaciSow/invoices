@@ -12,14 +12,17 @@ int main() {
     struct Invoice *invoiceList;
     invoiceList = NULL;
 
+
     readData(&invoiceList);
+
+    printf("%s", generateUniqueID(invoiceList));
 //    issuingInvoice(&invoiceList);
 
 // funkcja
-    showShortInvoiceList(invoiceList);
-    struct Invoice *selectedInvoice = selectInvoice(invoiceList);
-    showInvoice(selectedInvoice);
-    invoiceOptions(invoiceList, selectedInvoice);
+//    showShortInvoiceList(invoiceList);
+//    struct Invoice *selectedInvoice = selectInvoice(invoiceList);
+//    showInvoice(selectedInvoice);
+//    invoiceOptions(invoiceList, selectedInvoice);
 
 //    selectedInvoice = selectInvoice(invoiceList);
 //    showInvoice(selectedInvoice);
@@ -30,7 +33,6 @@ int main() {
 }
 
 // todo * wyszukanie faktury (po dacie)
-// todo * unikalne ID dla faktury
 // todo * wyswietlenie faktur do opłacenia (dane sprzedawcy i kupujacego nr konta i kwota...)
 // todo * wyglad faktury
 // todo * menu użytkownika

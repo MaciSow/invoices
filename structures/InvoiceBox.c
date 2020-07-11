@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "Address.h"
 #include "Person.h"
+#include "Ware.h"
 #include "Invoice.h"
 #include "InvoiceBox.h"
 #include "Input.h"
@@ -57,7 +58,7 @@ void showShortInvoiceList(struct Invoice *invoiceList) {
 }
 
 struct Invoice *selectInvoice(struct Invoice *invoiceList) {
-    printf("\nGet item number: ");
+    printf("Get item number: ");
 
     int length = lengthInvoiceList(invoiceList);
     int choose = repeatUntilSelectValid(length);
@@ -151,38 +152,46 @@ void invoiceEditOptions(struct Invoice *invoice) {
     int isClose = 0;
 
     while (!isClose) {
-        printf("\nWhat Edit?\n [1] Invoice data\n [2] Solder data\n [3] Solder address\n "
-               "[4] Buyer data\n [5] Buyer address\n [6] Ware data\n [7] Back\n"
+        printf("\nWhat part of invoice edit?\n [1] Invoice data\n [2] Solder data\n [3] Solder address\n "
+               "[4] Buyer data\n [5] Buyer address\n [6] Ware data\n [7] Add ware\n [8] Back\n"
                "Your choice:");
 
-        int select = repeatUntilSelectValid(7);
+        int select = repeatUntilSelectValid(8);
 
         switch (select) {
             case 1 :
-                printf("Edit invoice data:\n");
+                printf("\nEdit invoice data:\n");
                 editInvoice(invoice);
                 break;
             case 2:
-                printf("Edit solder data:\n");
+                printf("\nEdit solder data:\n");
                 editPerson(invoice->solder, 1);
                 break;
             case 3:
-                printf("Edit solder address:\n");
+                printf("\nEdit solder address:\n");
                 editAddress(invoice->solder->address);
                 break;
             case 4 :
-                printf("Edit buyer data:\n");
+                printf("\nEdit buyer data:\n");
                 editPerson(invoice->buyer, 0);
                 break;
             case 5:
-                printf("Edit buyer address:\n");
+                printf("\nEdit buyer address:\n");
                 editAddress(invoice->buyer->address);
                 break;
             case 6:
-                printf("Edit wares:\n");
+                printf("\nEdit wares:\n");
                 showWareList(invoice);
                 struct Ware *selectedWare = selectWare(invoice);
                 wareOptions(invoice,selectedWare);
+                calculateSumWares(invoice);
+                break;
+            case 7:
+                printf("\nAdd ware:\n");
+                struct Ware *ware = createWare();
+                getDataWare(ware);
+                calculateValuesWare(ware);
+                addWare(invoice,ware);
                 calculateSumWares(invoice);
                 break;
             default:
@@ -190,7 +199,7 @@ void invoiceEditOptions(struct Invoice *invoice) {
                 break;
         }
         if (!isClose) {
-            printf("Edited successful");
+            printf("\nEdited successful");
             showInvoice(invoice);
         }
     }
