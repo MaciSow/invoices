@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Address.h"
 #include "Person.h"
 #include "Ware.h"
@@ -183,7 +184,7 @@ void invoiceEditOptions(struct Invoice *invoice) {
                 printf("\nEdit wares:\n");
                 showWareList(invoice);
                 struct Ware *selectedWare = selectWare(invoice);
-                wareOptions(invoice,selectedWare);
+                wareOptions(invoice, selectedWare);
                 calculateSumWares(invoice);
                 break;
             case 7:
@@ -191,7 +192,7 @@ void invoiceEditOptions(struct Invoice *invoice) {
                 struct Ware *ware = createWare();
                 getDataWare(ware);
                 calculateValuesWare(ware);
-                addWare(invoice,ware);
+                addWare(invoice, ware);
                 calculateSumWares(invoice);
                 break;
             default:
@@ -203,4 +204,49 @@ void invoiceEditOptions(struct Invoice *invoice) {
             showInvoice(invoice);
         }
     }
+}
+
+void searchInvoicesByDate(struct Invoice *invoiceList, char date[]) {
+    if (invoiceList == NULL) {
+        printf("List is empty");
+        return;
+    }
+
+    int length = 0;
+    struct Invoice *tmp = invoiceList;
+    while (tmp) {
+        if (!strcmp(tmp->date, date)) {
+            length++;
+        }
+        tmp = tmp->iNext;
+    }
+
+    if (!length) {
+        printf("No results found");
+        return;
+    }
+
+    struct Invoice *tab[length];
+
+    int index = 0;
+    tmp = invoiceList;
+    while (tmp) {
+        if (!strcmp(tmp->date, date)) {
+            tab[index] = tmp;
+            index++;
+        }
+        tmp = tmp->iNext;
+    }
+
+    printf("Invoice's List\n------------------------\n");
+    for (int i = 1; i <= length; ++i) {
+        printf("[ %2i ] - %s\n", i, tab[i - 1]->documentNumber);
+    }
+    printf("------------------------\n");
+
+    printf("Get item number: ");
+
+    int choose = repeatUntilSelectValid(length)-1;
+    showInvoice(tab[choose]);
+    invoiceOptions(invoiceList,tab[choose]);
 }

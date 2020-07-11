@@ -17,4 +17,6 @@ void invoiceOptions(struct Invoice *invoiceList, struct Invoice *invoice);
 
 void invoiceEditOptions(struct Invoice *invoice);
 
+void searchInvoicesByDate(struct Invoice *invoiceList, char date[]);
+
 #endif //INVOICE_INVOICEBOX_H

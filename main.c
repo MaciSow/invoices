@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <string.h>
 #include "structures/Person.h"
 #include "structures/Ware.h"
 #include "structures/Invoice.h"
@@ -15,7 +15,10 @@ int main() {
 
     readData(&invoiceList);
 
-    printf("%s", generateUniqueID(invoiceList));
+    searchInvoicesByDate(invoiceList,"22.11.2020");
+
+//    printf("%d", strcmp("11.07.2020","11.07.2020"));
+   // printf("%s", generateUniqueID(invoiceList));
 //    issuingInvoice(&invoiceList);
 
 // funkcja
@@ -32,7 +35,6 @@ int main() {
     return 0;
 }
 
-// todo * wyszukanie faktury (po dacie)
 // todo * wyswietlenie faktur do opłacenia (dane sprzedawcy i kupujacego nr konta i kwota...)
 // todo * wyglad faktury
 // todo * menu użytkownika
