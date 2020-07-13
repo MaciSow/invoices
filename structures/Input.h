@@ -9,6 +9,6 @@ float repeatUntilValid();
 
 int readInteger();
 
-int repeatUntilSelectValid(int optionsAmount);
+int repeatUntilSelectValid(int start, int end);
 
 #endif //INVOICE_INPUT_H

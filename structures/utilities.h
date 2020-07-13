@@ -11,4 +11,6 @@ char *getFutureDate(char dateFormat[],int weeks);
 
 int isNegative(char string[]);
 
+void printNsymbols(int n, char symbol );
+
 #endif //INVOICE_UTILITIES_H

@@ -24,4 +24,8 @@ void getDataPerson(struct Person *person, int isSolder);
 
 void editPerson(struct Person *person, int isSolder);
 
+void showPersonsTogether(struct Person *solder,struct Person *buyer );
+
+void showPersonsInLine(struct Person *solder, struct Person *buyer);
+
 #endif //INVOICE_PERSON_H

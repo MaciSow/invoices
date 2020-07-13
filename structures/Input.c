@@ -177,14 +177,14 @@ float repeatUntilValid() {
     return value;
 }
 
-int repeatUntilSelectValid(int optionsAmount){
+int repeatUntilSelectValid(int start, int end){
     int isInvalid;
     int select;
 
     do {
         isInvalid = 0;
         select = readInteger();
-        if (!(select > 0 && select <= optionsAmount)) {
+        if (!(select >= start && select <= end)) {
             isInvalid = 1;
             printf("    - wrong data, try again:");
         }

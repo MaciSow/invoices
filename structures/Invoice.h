@@ -51,4 +51,6 @@ void deleteWareFromList(struct Invoice *invoice, struct Ware *ware);
 
 char* generateUniqueID(struct Invoice *invoiceList);
 
+void showInvoiceToPaid (struct Invoice *invoice);
+
 #endif //INVOICE_INVOICE_H

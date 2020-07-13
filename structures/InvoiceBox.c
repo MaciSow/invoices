@@ -6,6 +6,7 @@
 #include "Ware.h"
 #include "Invoice.h"
 #include "InvoiceBox.h"
+#include "utilities.h"
 #include "Input.h"
 
 void addInvoice(struct Invoice **invoiceList, struct Invoice *invoice) {
@@ -40,7 +41,9 @@ void showInvoiceList(struct Invoice *invoiceList) {
 }
 
 void showShortInvoiceList(struct Invoice *invoiceList) {
-    printf("Invoice's List\n------------------------\n");
+    printf("Invoice's List\n");
+    printNsymbols(100, '-');
+
     if (invoiceList == NULL) {
         printf("List is empty");
         return;
@@ -55,14 +58,15 @@ void showShortInvoiceList(struct Invoice *invoiceList) {
         tmp = tmp->iNext;
         counter++;
     } while (tmp != NULL);
-    printf("------------------------\n");
+
+    printNsymbols(100, '-');
 }
 
 struct Invoice *selectInvoice(struct Invoice *invoiceList) {
     printf("Get item number: ");
 
     int length = lengthInvoiceList(invoiceList);
-    int choose = repeatUntilSelectValid(length);
+    int choose = repeatUntilSelectValid(1, length);
 
     int counter = 1;
 
@@ -135,7 +139,7 @@ void invoiceOptions(struct Invoice *invoiceList, struct Invoice *invoice) {
            "[3] Back\n"
            "Your choice:");
 
-    int select = repeatUntilSelectValid(3);
+    int select = repeatUntilSelectValid(1, 3);
 
     switch (select) {
         case 1 :
@@ -157,7 +161,7 @@ void invoiceEditOptions(struct Invoice *invoice) {
                "[4] Buyer data\n [5] Buyer address\n [6] Ware data\n [7] Add ware\n [8] Back\n"
                "Your choice:");
 
-        int select = repeatUntilSelectValid(8);
+        int select = repeatUntilSelectValid(1, 8);
 
         switch (select) {
             case 1 :
@@ -238,15 +242,79 @@ void searchInvoicesByDate(struct Invoice *invoiceList, char date[]) {
         tmp = tmp->iNext;
     }
 
-    printf("Invoice's List\n------------------------\n");
+    printf("Invoice's List\n");
+    printNsymbols(100, '-');
+
     for (int i = 1; i <= length; ++i) {
         printf("[ %2i ] - %s\n", i, tab[i - 1]->documentNumber);
     }
-    printf("------------------------\n");
 
+    printNsymbols(100, '-');
     printf("Get item number: ");
 
-    int choose = repeatUntilSelectValid(length)-1;
+    int choose = repeatUntilSelectValid(1, length) - 1;
     showInvoice(tab[choose]);
-    invoiceOptions(invoiceList,tab[choose]);
+    invoiceOptions(invoiceList, tab[choose]);
+}
+
+int searchInvoicesByPaid(struct Invoice *invoiceList) {
+    if (invoiceList == NULL) {
+        printf("List is empty");
+        return 0;
+    }
+
+    int length = 0;
+    struct Invoice *tmp = invoiceList;
+
+    while (tmp) {
+        if (tmp->paid < tmp->grossSum) {
+            length++;
+        }
+        tmp = tmp->iNext;
+    }
+
+    if (!length) {
+        printf("No results found");
+        return 0;
+    }
+
+    struct Invoice *tab[length];
+
+    int index = 0;
+    tmp = invoiceList;
+
+    while (tmp) {
+        if (tmp->paid < tmp->grossSum) {
+            tab[index] = tmp;
+            index++;
+        }
+        tmp = tmp->iNext;
+    }
+
+
+    printf("Invoice's List\n");
+    printNsymbols(100, '-');
+
+    for (int i = 0; i < length; ++i) {
+        printf("[ %2i ] - %s\n", i + 1, tab[i]->documentNumber);
+        showPersonsInLine(tab[i]->solder, tab[i]->buyer);
+        printf("To paid: %.2f\n", tab[i]->grossSum - tab[i]->paid);
+
+        if (i < length - 1) {
+            printf("\n");
+        }
+    }
+
+    printNsymbols(100, '-');
+    printf("Which invoice do you want to paid (press 0 to back): ");
+
+    int choose = repeatUntilSelectValid(0, length);
+
+    if (choose == 0) {
+        return 0;
+    }
+    choose--;
+    showInvoiceToPaid(tab[choose]);
+
+    return 1;
 }

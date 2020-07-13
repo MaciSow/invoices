@@ -34,19 +34,19 @@ void fillInvoice(struct Invoice *invoice, struct Person *solder, struct Person *
 };
 
 void showInvoice(struct Invoice *invoice) {
-    printf("\n====================================================================================================\n");
+
+    printNsymbols(100, '=');
+
     printf("Invoice nr: %-72sDate: %s", invoice->documentNumber, invoice->date);
 
 
-    printf("\n\nSolder:\n");
-    showPerson(invoice->solder);
+    showPersonsTogether(invoice->solder, invoice->buyer);
 
-    printf("\n\nBuyer:\n");
-    showPerson(invoice->buyer);
-    printf("\n\n----------------------------------------------------------------------------------------------------\n");
+    printf("\n");
+    printNsymbols(100, '-');
     printf("%5s|%14s%10s%10s|%11s|%11s|%11s|%11s|%11s\n", "No.", "Name", "|", "Amount", "Net Price", "Net Val", "Tax",
            "Tax Val", "Gross Val");
-    printf("----------------------------------------------------------------------------------------------------\n");
+    printNsymbols(100, '-');
 
     if (invoice->wHead == NULL) {
         printf("List is empty");
@@ -74,7 +74,8 @@ void showInvoice(struct Invoice *invoice) {
            "Paid:",
            invoice->paid ? invoice->grossSum : 0
     );
-    printf("\n====================================================================================================\n");
+    printf("\n");
+    printNsymbols(100, '=');
 }
 
 void addWare(struct Invoice *invoice, struct Ware *ware) {
@@ -127,7 +128,7 @@ void getDataInvoice(struct Invoice *invoice) {
         invoice->paid = 0;
         printf("Payment deadline:\n [1] one week\n [2] two weeks\n [3] four weeks\nYour choice:");
 
-        amountWeeks = repeatUntilSelectValid(3);
+        amountWeeks = repeatUntilSelectValid(1, 3);
         amountWeeks = amountWeeks == 3 ? 4 : amountWeeks;
     }
     strcpy(invoice->paymentDeadline, getFutureDate("%d.%m.%Y", amountWeeks));
@@ -228,13 +229,13 @@ void editInvoice(struct Invoice *invoice) {
 }
 
 void wareOptions(struct Invoice *invoice, struct Ware *ware) {
-    printf("\nWhat next?\n "
-           "[1] Edit\n "
-           "[2] Delete\n "
-           "[3] Back\n"
+    printf("\nWhat next?\n"
+           " [1] Edit\n"
+           " [2] Delete\n"
+           " [3] Back\n"
            "Your choice:");
 
-    int select = repeatUntilSelectValid(3);
+    int select = repeatUntilSelectValid(1, 3);
 
     switch (select) {
         case 1 :
@@ -266,7 +267,7 @@ struct Ware *selectWare(struct Invoice *invoice) {
     printf("Get item number: ");
 
     int length = lengthWareList(invoice->wHead);
-    int choose = repeatUntilSelectValid(length);
+    int choose = repeatUntilSelectValid(1, length);
 
     int counter = 1;
     struct Ware *tmp = invoice->wHead;
@@ -336,10 +337,6 @@ char *generateUniqueID(struct Invoice *invoiceList) {
     char *uniqueId = malloc(16);
     memset(uniqueId, '\0', 16);
     strcpy(uniqueId, getCurrentDate("%d/%m/%Y"));
-//    strcat(date, "/0000");
-
-//    strcpy(date, cutString(date,  16));
-//    printf("%s", date);
 
     if (invoiceList == NULL) {
         strcat(uniqueId, "/0000");
@@ -371,7 +368,31 @@ char *generateUniqueID(struct Invoice *invoiceList) {
     strcat(uniqueId, "/");
     sprintf(idString, "%04d", id);
     strcat(uniqueId, idString);
+
     return uniqueId;
+}
 
+void showInvoiceToPaid(struct Invoice *invoice) {
+    printf("Transfer data:\n");
+    printf("%28s: %s %s %s\n", "Beneficiary", invoice->solder->companyName, invoice->solder->name,
+           invoice->solder->surname);
+    printf("%28s: %s %s\n%29s %s %s\n", "Beneficiary address", invoice->solder->address->street,
+           invoice->solder->address->homeNumber, "",invoice->solder->address->postalCode,invoice->solder->address->city);
 
+    printf("%28s: %s\n", "Beneficiary's account number", formatAccountNumber(invoice->solder->accountNumber));
+    printf("%28s: %s\n", "Title", invoice->documentNumber);
+    printf("%28s: %.2f\n", "Amount", (invoice->grossSum - invoice->paid));
+    printf("%28s: %s\n", "Date", getCurrentDate("%d.%m.%Y"));
+
+    printf("\nWhat next?\n"
+           " [1] Paid\n"
+           " [2] Back\n"
+           "Your choice:");
+
+    int select = repeatUntilSelectValid(1, 3);
+
+    if (select == 1) {
+        printf("\nInvoice paid successfully\n");
+        invoice->paid = invoice->grossSum;
+    }
 }

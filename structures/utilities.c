@@ -66,3 +66,11 @@ int isNegative(char string[]) {
     float number = strtof(string, NULL);
     return number > 0 ? 0 : 1;
 }
+
+void printNsymbols(int n, char symbol ) {
+    char * dest = malloc(n+1);
+    memset(dest, symbol, n);
+    dest[n] = '\0';
+    puts(dest);
+    free(dest);
+}

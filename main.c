@@ -15,10 +15,11 @@ int main() {
 
     readData(&invoiceList);
 
-    searchInvoicesByDate(invoiceList,"22.11.2020");
+
+    while (searchInvoicesByPaid(invoiceList));
 
 //    printf("%d", strcmp("11.07.2020","11.07.2020"));
-   // printf("%s", generateUniqueID(invoiceList));
+    // printf("%s", generateUniqueID(invoiceList));
 //    issuingInvoice(&invoiceList);
 
 // funkcja
@@ -35,7 +36,6 @@ int main() {
     return 0;
 }
 
-// todo * wyswietlenie faktur do opłacenia (dane sprzedawcy i kupujacego nr konta i kwota...)
 // todo * wyglad faktury
 // todo * menu użytkownika
 // todo * zapis do pliku

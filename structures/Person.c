@@ -20,11 +20,11 @@ struct Person *createPerson() {
 
 void fillPerson(struct Person *person, struct Address *address, char companyName[], char name[], char surname[],
                 char nip[], char accountNumber[]) {
-    strcpy(person->companyName, cutString(companyName,50));
-    strcpy(person->name, cutString(name,50));
-    strcpy(person->surname, cutString(surname,50));
-    strcpy(person->nip, cutString(nip,11));
-    strcpy(person->accountNumber, cutString(accountNumber,27));
+    strcpy(person->companyName, cutString(companyName, 50));
+    strcpy(person->name, cutString(name, 50));
+    strcpy(person->surname, cutString(surname, 50));
+    strcpy(person->nip, cutString(nip, 11));
+    strcpy(person->accountNumber, cutString(accountNumber, 27));
     person->address = address;
 }
 
@@ -84,6 +84,30 @@ void getDataPerson(struct Person *person, int isSolder) {
     }
 }
 
-void editPerson(struct Person *person, int isSolder){
+void editPerson(struct Person *person, int isSolder) {
     getDataPerson(person, isSolder);
+}
+
+void showPersonsTogether(struct Person *solder, struct Person *buyer) {
+    printf("\n\nSolder:\n");
+    showPerson(solder);
+
+    printf("\n\nBuyer:\n");
+    showPerson(buyer);
+}
+
+void showPersonsInLine(struct Person *solder, struct Person *buyer) {
+    char nameWithSurname[100];
+    strcpy(nameWithSurname, solder->name);
+    strcat(nameWithSurname, " ");
+    strcat(nameWithSurname, solder->surname);
+
+    printf("         Solder: %-20s %-30s\n", solder->companyName, nameWithSurname);
+
+    memset(nameWithSurname, '\0', 100);
+    strcpy(nameWithSurname, buyer->name);
+    strcat(nameWithSurname, " ");
+    strcat(nameWithSurname, buyer->surname);
+
+    printf("         Buyer:  %-20s %-30s", strcmp(buyer->nip, "---") ? buyer->companyName : "", nameWithSurname);
 }

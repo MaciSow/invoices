@@ -19,4 +19,6 @@ void invoiceEditOptions(struct Invoice *invoice);
 
 void searchInvoicesByDate(struct Invoice *invoiceList, char date[]);
 
+int searchInvoicesByPaid(struct Invoice *invoiceList);
+
 #endif //INVOICE_INVOICEBOX_H
