@@ -39,13 +39,14 @@ void showInvoice(struct Invoice *invoice) {
 
     printf("Invoice nr: %-72sDate: %s", invoice->documentNumber, invoice->date);
 
-
     showPersonsTogether(invoice->solder, invoice->buyer);
 
-    printf("\n");
+    printf("\n\n");
     printNsymbols(100, '-');
+
     printf("%5s|%14s%10s%10s|%11s|%11s|%11s|%11s|%11s\n", "No.", "Name", "|", "Amount", "Net Price", "Net Val", "Tax",
            "Tax Val", "Gross Val");
+
     printNsymbols(100, '-');
 
     if (invoice->wHead == NULL) {
@@ -377,7 +378,8 @@ void showInvoiceToPaid(struct Invoice *invoice) {
     printf("%28s: %s %s %s\n", "Beneficiary", invoice->solder->companyName, invoice->solder->name,
            invoice->solder->surname);
     printf("%28s: %s %s\n%29s %s %s\n", "Beneficiary address", invoice->solder->address->street,
-           invoice->solder->address->homeNumber, "",invoice->solder->address->postalCode,invoice->solder->address->city);
+           invoice->solder->address->homeNumber, "", invoice->solder->address->postalCode,
+           invoice->solder->address->city);
 
     printf("%28s: %s\n", "Beneficiary's account number", formatAccountNumber(invoice->solder->accountNumber));
     printf("%28s: %s\n", "Title", invoice->documentNumber);

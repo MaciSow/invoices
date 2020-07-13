@@ -13,4 +13,6 @@ int isNegative(char string[]);
 
 void printNsymbols(int n, char symbol );
 
+char *concatenationStrings(char a[], char b[]);
+
 #endif //INVOICE_UTILITIES_H

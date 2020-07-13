@@ -29,15 +29,15 @@ void fillPerson(struct Person *person, struct Address *address, char companyName
 }
 
 void showPerson(struct Person *person) {
-    if (!strcmp(person->nip, "---")) {
-        printf("    %s %s",
+    if (isCompany(person)) {
+        printf("    %s\t%s\n    %s %s",
+               person->companyName,
+               person->nip,
                person->name,
                person->surname
         );
     } else {
-        printf("    %s\t%s\n    %s %s",
-               person->companyName,
-               person->nip,
+        printf("    %s %s",
                person->name,
                person->surname
         );
@@ -46,6 +46,31 @@ void showPerson(struct Person *person) {
     printf("\n\n    Address:\n");
     showAddress(person->address);
 };
+
+void showPersonsTogether(struct Person *solder, struct Person *buyer) {
+    char *solderData = getLinePerson(solder);
+    char *buyerData = getLinePerson(buyer);
+    printf("\n\n%10s: %-40s%10s: %-40s", "Solder", solderData, "Buyer", buyerData);
+    free(solderData);
+    free(buyerData);
+
+    solderData = concatenationStrings(solder->address->street, solder->address->homeNumber);
+    buyerData = concatenationStrings(buyer->address->street, buyer->address->homeNumber);
+    printf("\n%10s: %-40s%10s: %-40s", "Address", solderData, "Address", buyerData);
+    free(solderData);
+    free(buyerData);
+
+    solderData = concatenationStrings(solder->address->postalCode, solder->address->city);
+    buyerData = concatenationStrings(buyer->address->postalCode, buyer->address->city);
+    printf("\n%11s %-40s%11s %-40s", " ", solderData, " ", buyerData);
+    free(solderData);
+    free(buyerData);
+
+    printf("\n%10s: %-40s", "NIP", solder->nip);
+    if (isCompany(buyer)) {
+        printf("%10s: %-40s", "NIP", buyerData);
+    }
+}
 
 void deletePerson(struct Person *person) {
     free(person->address);
@@ -88,26 +113,35 @@ void editPerson(struct Person *person, int isSolder) {
     getDataPerson(person, isSolder);
 }
 
-void showPersonsTogether(struct Person *solder, struct Person *buyer) {
-    printf("\n\nSolder:\n");
-    showPerson(solder);
+void showPersonsInLine(struct Person *solder, struct Person *buyer) {
+    char *nameWithSurname = concatenationStrings(solder->name, solder->surname);
+    printf("         Solder: %-20s %-30s\n", solder->companyName, nameWithSurname);
+    free(nameWithSurname);
 
-    printf("\n\nBuyer:\n");
-    showPerson(buyer);
+    nameWithSurname = concatenationStrings(buyer->name, buyer->surname);
+    printf("         Buyer:  %-20s %-30s", isCompany(buyer) ? buyer->companyName : "", nameWithSurname);
+    free(nameWithSurname);
 }
 
-void showPersonsInLine(struct Person *solder, struct Person *buyer) {
-    char nameWithSurname[100];
-    strcpy(nameWithSurname, solder->name);
-    strcat(nameWithSurname, " ");
-    strcat(nameWithSurname, solder->surname);
+char *getLinePerson(struct Person *person) {
+    char *string = malloc(150);
+    memset(string, '\0', 150);
 
-    printf("         Solder: %-20s %-30s\n", solder->companyName, nameWithSurname);
+    if (isCompany(person)) {
+        strcpy(string, person->companyName);
+        strcat(string, " ");
+    }
+    strcat(string, person->name);
+    strcat(string, " ");
+    strcat(string, person->surname);
+    strcat(string, "\0");
 
-    memset(nameWithSurname, '\0', 100);
-    strcpy(nameWithSurname, buyer->name);
-    strcat(nameWithSurname, " ");
-    strcat(nameWithSurname, buyer->surname);
+    return string;
+}
 
-    printf("         Buyer:  %-20s %-30s", strcmp(buyer->nip, "---") ? buyer->companyName : "", nameWithSurname);
+int isCompany(struct Person *person) {
+    if (strcmp(person->nip, "---") != 0) {
+        return 1;
+    }
+    return 0;
 }

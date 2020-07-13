@@ -15,8 +15,13 @@ int main() {
 
     readData(&invoiceList);
 
+    showInvoice(invoiceList);
 
-    while (searchInvoicesByPaid(invoiceList));
+
+
+//    printf("%s %s %s %s",  "a:", "b", "c:", "d");
+
+   // while (searchInvoicesByPaid(invoiceList));
 
 //    printf("%d", strcmp("11.07.2020","11.07.2020"));
     // printf("%s", generateUniqueID(invoiceList));
@@ -36,7 +41,7 @@ int main() {
     return 0;
 }
 
-// todo * wyglad faktury
+// todo * zapętlanie edycji
 // todo * menu użytkownika
 // todo * zapis do pliku
 // todo * sprzątanie

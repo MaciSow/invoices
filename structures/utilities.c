@@ -74,3 +74,15 @@ void printNsymbols(int n, char symbol ) {
     puts(dest);
     free(dest);
 }
+
+char *concatenationStrings(char a[], char b[]) {
+    char *string = malloc(150);
+    memset(string, '\0', 150);
+
+    strcat(string, a);
+    strcat(string, " ");
+    strcat(string, b);
+    strcat(string, "\0");
+
+    return string;
+}

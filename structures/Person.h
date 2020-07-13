@@ -28,4 +28,8 @@ void showPersonsTogether(struct Person *solder,struct Person *buyer );
 
 void showPersonsInLine(struct Person *solder, struct Person *buyer);
 
+char* getLinePerson(struct Person *person);
+
+int isCompany(struct Person *person);
+
 #endif //INVOICE_PERSON_H
