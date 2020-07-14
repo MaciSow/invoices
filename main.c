@@ -51,17 +51,17 @@ int main() {
                 struct Invoice *selectedInvoice = selectInvoice(invoiceList);
                 showInvoice(selectedInvoice);
                 invoiceOptions(&invoiceList, selectedInvoice);
-
                 break;
             case 2:
                 issuingInvoice(&invoiceList);
                 break;
             case 3:
                 date = getDate();
-                searchInvoicesByDate(invoiceList, date);
+                searchInvoicesByDate(&invoiceList, date);
                 free(date);
                 break;
             case 4:
+                searchInvoicesByPaid(&invoiceList);
                 break;
             default:
                 isClose = 1;
@@ -70,34 +70,9 @@ int main() {
         printf("\n\n");
     }
 
-
-
-
-
-
-
-
-    // while (searchInvoicesByPaid(invoiceList));
-
-//    printf("%d", strcmp("11.07.2020","11.07.2020"));
-    // printf("%s", generateUniqueID(invoiceList));
-//    issuingInvoice(&invoiceList);
-
-// funkcja
-//    showShortInvoiceList(invoiceList);
-//    struct Invoice *selectedInvoice = selectInvoice(invoiceList);
-//    showInvoice(selectedInvoice);
-//    invoiceOptions(invoiceList, selectedInvoice);
-
-//    selectedInvoice = selectInvoice(invoiceList);
-//    showInvoice(selectedInvoice);
-//    invoiceOptions(invoiceList, selectedInvoice);
-///  end funkcja
-
     return 0;
 }
 
-// todo * menu użytkownika
 // todo * zapis do pliku
 // todo * sprzątanie
 // todo * doxygen

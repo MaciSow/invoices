@@ -151,7 +151,7 @@ void invoiceOptions(struct Invoice **invoiceList, struct Invoice *invoice) {
                 break;
             case 2:
                 deleteInvoiceFromList(invoiceList, invoice);
-                printf("\nDeleted successful");
+                printf("\nDeleted successfully");
             default:
                 isClose = 1;
                 break;
@@ -161,7 +161,7 @@ void invoiceOptions(struct Invoice **invoiceList, struct Invoice *invoice) {
 
 void invoiceEditOptions(struct Invoice *invoice) {
     int isClose = 0;
-    int hasWares = 0;
+    int hasWares;
 
     while (!isClose) {
         hasWares = invoice->wHead == NULL ? 0 : 1;
@@ -230,20 +230,20 @@ void invoiceEditOptions(struct Invoice *invoice) {
                 break;
         }
         if (!isClose) {
-            printf("\nEdited successful");
+            printf("\nEdited successfully");
         }
         showInvoice(invoice);
     }
 }
 
-void searchInvoicesByDate(struct Invoice *invoiceList, char date[]) {
-    if (invoiceList == NULL) {
+void searchInvoicesByDate(struct Invoice **invoiceList, char date[]) {
+    if (*invoiceList == NULL) {
         printf("List is empty");
         return;
     }
 
     int length = 0;
-    struct Invoice *tmp = invoiceList;
+    struct Invoice *tmp = *invoiceList;
     while (tmp) {
         if (!strcmp(tmp->date, date)) {
             length++;
@@ -259,7 +259,7 @@ void searchInvoicesByDate(struct Invoice *invoiceList, char date[]) {
     struct Invoice *tab[length];
 
     int index = 0;
-    tmp = invoiceList;
+    tmp = *invoiceList;
     while (tmp) {
         if (!strcmp(tmp->date, date)) {
             tab[index] = tmp;
@@ -280,17 +280,17 @@ void searchInvoicesByDate(struct Invoice *invoiceList, char date[]) {
 
     int choose = repeatUntilSelectValid(1, length) - 1;
     showInvoice(tab[choose]);
-    invoiceOptions(&invoiceList, tab[choose]);
+    invoiceOptions(&*invoiceList, tab[choose]);
 }
 
-int searchInvoicesByPaid(struct Invoice *invoiceList) {
-    if (invoiceList == NULL) {
+int searchInvoicesByPaid(struct Invoice **invoiceList) {
+    if (*invoiceList == NULL) {
         printf("List is empty");
         return 0;
     }
 
     int length = 0;
-    struct Invoice *tmp = invoiceList;
+    struct Invoice *tmp = *invoiceList;
 
     while (tmp) {
         if (tmp->paid < tmp->grossSum) {
@@ -307,7 +307,7 @@ int searchInvoicesByPaid(struct Invoice *invoiceList) {
     struct Invoice *tab[length];
 
     int index = 0;
-    tmp = invoiceList;
+    tmp = *invoiceList;
 
     while (tmp) {
         if (tmp->paid < tmp->grossSum) {
@@ -332,7 +332,7 @@ int searchInvoicesByPaid(struct Invoice *invoiceList) {
     }
 
     printSeparator(100, '-');
-    printf("Which invoice do you want to paid (press 0 to back): ");
+    printf("Which invoice do you want to paid (press 0 to back):");
 
     int choose = repeatUntilSelectValid(0, length);
 

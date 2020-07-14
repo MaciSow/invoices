@@ -73,7 +73,7 @@ void showInvoice(struct Invoice *invoice) {
            "Payment Deadline:",
            invoice->paymentDeadline,
            "Paid:",
-           invoice->paid ? invoice->grossSum : 0
+           invoice->paid
     );
     printf("\n");
     printSeparator(100, '=');
@@ -160,6 +160,7 @@ void issuingInvoice(struct Invoice **invoiceList) {
 
     putWareList(invoice);
     calculateSumWares(invoice);
+    invoice->paid = invoice->paid ? invoice->grossSum : 0;
 
     addInvoice(invoiceList, invoice);
 }

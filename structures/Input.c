@@ -158,7 +158,7 @@ int readInteger() {
     return strtol(readLine(15), NULL, 10);
 }
 
-float repeatUntilValid() {
+float readNumber() {
     float value;
     int isInvalid;
     char string[15];
@@ -175,6 +175,25 @@ float repeatUntilValid() {
 
     value = strtof(string, NULL);
     return value;
+}
+
+float readPercentage() {
+    float value;
+    int isInvalid;
+    char string[4];
+
+    do {
+        isInvalid = 0;
+        strcpy(string, readLine(4));
+
+        if (strtof(string, NULL) > 0 ? 0 : 1) {
+            isInvalid = 1;
+            printf("    - wrong data, try again:");
+        }
+    } while (isInvalid);
+
+    value = strtof(string, NULL);
+    return value/100;
 }
 
 int repeatUntilSelectValid(int start, int end) {
@@ -213,33 +232,4 @@ char *getDate() {
 
         printf("    - wrong data, try again:");
     }
-}
-
-int isValidDateFormat(const char *date) {
-    int partDate = 0;
-
-    for (int i = 0; i < 10; ++i) {
-        partDate = date[i] - '0';
-
-        if ((i == 2 || i == 5) && partDate != -2) {
-            return 0;
-        }
-
-        if ((partDate < 0 || partDate > 9) && (i != 2 && i != 5)) {
-            return 0;
-        }
-    }
-
-    return 1;
-}
-
-int isValidDatePart(char *date, int start, int length, int min, int max) {
-    char partDateString[5] = {};
-    int partDate;
-
-    strncpy(partDateString, date + start, length);
-    partDate = atoi(partDateString);
-
-    return (partDate >= min && partDate <= max) ? 1 : 0;
-
 }

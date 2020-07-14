@@ -15,4 +15,9 @@ void printSeparator(int n, char separator );
 
 char *concatenationStrings(char a[], char b[]);
 
+int isValidDateFormat(const char *date);
+
+int isValidDatePart(char *date, int start, int length, int min, int max);
+
+
 #endif //INVOICE_UTILITIES_H

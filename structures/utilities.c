@@ -86,3 +86,33 @@ char *concatenationStrings(char a[], char b[]) {
 
     return string;
 }
+
+
+int isValidDateFormat(const char *date) {
+    int partDate = 0;
+
+    for (int i = 0; i < 10; ++i) {
+        partDate = date[i] - '0';
+
+        if ((i == 2 || i == 5) && partDate != -2) {
+            return 0;
+        }
+
+        if ((partDate < 0 || partDate > 9) && (i != 2 && i != 5)) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int isValidDatePart(char *date, int start, int length, int min, int max) {
+    char partDateString[5] = {};
+    int partDate;
+
+    strncpy(partDateString, date + start, length);
+    partDate = atoi(partDateString);
+
+    return (partDate >= min && partDate <= max) ? 1 : 0;
+
+}

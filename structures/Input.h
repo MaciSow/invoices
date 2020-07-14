@@ -5,16 +5,14 @@ void readData(struct Invoice **invoiceList);
 
 char *readLine(int length);
 
-float repeatUntilValid();
+float readNumber();
 
 int readInteger();
 
 int repeatUntilSelectValid(int start, int end);
 
+float readPercentage();
+
 char *getDate();
-
-int isValidDateFormat(const char *date);
-
-int isValidDatePart(char *date, int start, int length, int min, int max);
 
 #endif //INVOICE_INPUT_H

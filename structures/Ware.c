@@ -38,13 +38,13 @@ void getDataWare(struct Ware *ware) {
     strcpy(ware->name, readLine(150));
 
     printf("Amount:");
-    ware->amount = (int) repeatUntilValid();
+    ware->amount = (int) readNumber();
 
     printf("Net Price:");
-    ware->netPrice = repeatUntilValid();
+    ware->netPrice = readNumber();
 
     printf("Tax:");
-    ware->tax = repeatUntilValid() / 100;
+    ware->tax = readPercentage();
 }
 
 void calculateValuesWare(struct Ware *ware) {
