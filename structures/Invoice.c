@@ -13,7 +13,7 @@ struct Invoice *createInvoice() {
     struct Invoice *invoice;
     invoice = (struct Invoice *) malloc(sizeof(struct Invoice));
 
-    strcpy(invoice->documentNumber, strcat(getCurrentDate("%d/%m/%Y"), "/0001"));
+    strcpy(invoice->documentNumber, "");
     strcpy(invoice->date, getCurrentDate("%d.%m.%Y"));
     invoice->netSum = 0;
     invoice->taxSum = 0;
@@ -34,20 +34,20 @@ void fillInvoice(struct Invoice *invoice, struct Person *solder, struct Person *
 };
 
 void showInvoice(struct Invoice *invoice) {
-
-    printNsymbols(100, '=');
+    printf("\n");
+    printSeparator(100, '=');
 
     printf("Invoice nr: %-72sDate: %s", invoice->documentNumber, invoice->date);
 
     showPersonsTogether(invoice->solder, invoice->buyer);
 
     printf("\n\n");
-    printNsymbols(100, '-');
+    printSeparator(100, '-');
 
     printf("%5s|%14s%10s%10s|%11s|%11s|%11s|%11s|%11s\n", "No.", "Name", "|", "Amount", "Net Price", "Net Val", "Tax",
            "Tax Val", "Gross Val");
 
-    printNsymbols(100, '-');
+    printSeparator(100, '-');
 
     if (invoice->wHead == NULL) {
         printf("List is empty");
@@ -76,7 +76,7 @@ void showInvoice(struct Invoice *invoice) {
            invoice->paid ? invoice->grossSum : 0
     );
     printf("\n");
-    printNsymbols(100, '=');
+    printSeparator(100, '=');
 }
 
 void addWare(struct Invoice *invoice, struct Ware *ware) {
@@ -143,6 +143,7 @@ void issuingInvoice(struct Invoice **invoiceList) {
     struct Address *addressSolder = createAddress();
     struct Address *addressBuyer = createAddress();
 
+    strcpy(invoice->documentNumber, generateUniqueID(*invoiceList));
     getDataInvoice(invoice);
 
     getDataPerson(solder, 1);

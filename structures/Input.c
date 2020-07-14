@@ -154,7 +154,7 @@ char *readLine(int length) {
     return str;
 }
 
-int readInteger(){
+int readInteger() {
     return strtol(readLine(15), NULL, 10);
 }
 
@@ -177,7 +177,7 @@ float repeatUntilValid() {
     return value;
 }
 
-int repeatUntilSelectValid(int start, int end){
+int repeatUntilSelectValid(int start, int end) {
     int isInvalid;
     int select;
 
@@ -191,4 +191,55 @@ int repeatUntilSelectValid(int start, int end){
     } while (isInvalid);
 
     return select;
+}
+
+char *getDate() {
+    char *string = malloc(11);
+    memset(string, '\0', 11);
+    printf("Get date (dd.mm.yyyy):");
+
+    int isValid = 0;
+    while (1) {
+        strcpy(string, readLine(11));
+
+        isValid = isValidDateFormat(string);
+        isValid += isValidDatePart(string, 0, 2, 1, 31);
+        isValid += isValidDatePart(string, 3, 2, 1, 12);
+        isValid += isValidDatePart(string, 6, 4, 1970, 9999);
+
+        if (isValid == 4) {
+            return string;
+        }
+
+        printf("    - wrong data, try again:");
+    }
+}
+
+int isValidDateFormat(const char *date) {
+    int partDate = 0;
+
+    for (int i = 0; i < 10; ++i) {
+        partDate = date[i] - '0';
+
+        if ((i == 2 || i == 5) && partDate != -2) {
+            return 0;
+        }
+
+        if ((partDate < 0 || partDate > 9) && (i != 2 && i != 5)) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int isValidDatePart(char *date, int start, int length, int min, int max) {
+    char partDateString[5] = {};
+    int partDate;
+
+    strncpy(partDateString, date + start, length);
+    partDate = atoi(partDateString);
+
+    return (partDate >= min && partDate <= max) ? 1 : 0;
+
 }

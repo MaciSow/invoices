@@ -80,7 +80,6 @@ void deletePerson(struct Person *person) {
 void getDataPerson(struct Person *person, int isSolder) {
     char isCompany;
 
-
     if (isSolder) {
         printf("\nSolder\n");
     } else {

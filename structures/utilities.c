@@ -67,11 +67,11 @@ int isNegative(char string[]) {
     return number > 0 ? 0 : 1;
 }
 
-void printNsymbols(int n, char symbol ) {
+void printSeparator(int n, char separator ) {
     char * dest = malloc(n+1);
-    memset(dest, symbol, n);
+    memset(dest, separator, n);
     dest[n] = '\0';
-    puts(dest);
+    printf("%s\n", dest);
     free(dest);
 }
 
