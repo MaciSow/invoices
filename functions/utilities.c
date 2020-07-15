@@ -67,13 +67,6 @@ int isNegative(char string[]) {
     return number > 0 ? 0 : 1;
 }
 
-void printSeparator(int n, char separator ) {
-    char * dest = malloc(n+1);
-    memset(dest, separator, n);
-    dest[n] = '\0';
-    printf("%s\n", dest);
-    free(dest);
-}
 
 char *concatenationStrings(char a[], char b[]) {
     char *string = malloc(150);

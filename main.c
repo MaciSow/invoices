@@ -5,22 +5,23 @@
 #include "structures/Ware.h"
 #include "structures/Invoice.h"
 #include "structures/Address.h"
-#include "structures/Input.h"
+#include "functions/input.h"
 #include "structures/InvoiceBox.h"
-#include "structures/utilities.h"
+#include "functions/utilities.h"
+#include "functions/output.h"
 
 int main() {
     struct Invoice *invoiceList;
     invoiceList = NULL;
 
-    readData(&invoiceList);
+    readDataFromFile(&invoiceList);
 
 //    tests
 
 
-//    getDate();
+//    readDate();
 
-// return 0;
+//    return 0;
 
 
     int isClose = 0;
@@ -37,7 +38,7 @@ int main() {
         printf("[5] Exit\n");
         printSeparator(48, '-');
         printf("Your choice:");
-        int choose = repeatUntilSelectValid(1, 5);
+        int choose = readSelectOption(1, 5);
         printSeparator(48, '=');
         printf("\n");
         char *date;
@@ -56,7 +57,7 @@ int main() {
                 issuingInvoice(&invoiceList);
                 break;
             case 3:
-                date = getDate();
+                date = readDate();
                 searchInvoicesByDate(&invoiceList, date);
                 free(date);
                 break;
@@ -69,7 +70,7 @@ int main() {
         }
         printf("\n\n");
     }
-
+    saveDataToFile(&invoiceList);
     return 0;
 }
 

@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "Ware.h"
-#include "utilities.h"
-#include "Input.h"
+#include "../functions/utilities.h"
+#include "../functions/input.h"
 
 struct Ware *createWare() {
     struct Ware *ware;

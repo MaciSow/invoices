@@ -3,8 +3,8 @@
 #include <string.h>
 #include "Address.h"
 #include "Person.h"
-#include "utilities.h"
-#include "Input.h"
+#include "../functions/utilities.h"
+#include "../functions/input.h"
 
 struct Person *createPerson() {
     struct Person *person;

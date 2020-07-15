@@ -6,8 +6,9 @@
 #include "Ware.h"
 #include "Invoice.h"
 #include "InvoiceBox.h"
-#include "utilities.h"
-#include "Input.h"
+#include "../functions/utilities.h"
+#include "../functions/input.h"
+#include "../functions/output.h"
 
 struct Invoice *createInvoice() {
     struct Invoice *invoice;
@@ -129,7 +130,7 @@ void getDataInvoice(struct Invoice *invoice) {
         invoice->paid = 0;
         printf("Payment deadline:\n [1] one week\n [2] two weeks\n [3] four weeks\nYour choice:");
 
-        amountWeeks = repeatUntilSelectValid(1, 3);
+        amountWeeks = readSelectOption(1, 3);
         amountWeeks = amountWeeks == 3 ? 4 : amountWeeks;
     }
     strcpy(invoice->paymentDeadline, getFutureDate("%d.%m.%Y", amountWeeks));
@@ -238,7 +239,7 @@ void wareOptions(struct Invoice *invoice, struct Ware *ware) {
            " [3] Back\n"
            "Your choice:");
 
-    int select = repeatUntilSelectValid(1, 3);
+    int select = readSelectOption(1, 3);
 
     switch (select) {
         case 1 :
@@ -270,7 +271,7 @@ struct Ware *selectWare(struct Invoice *invoice) {
     printf("Get item number: ");
 
     int length = lengthWareList(invoice->wHead);
-    int choose = repeatUntilSelectValid(1, length);
+    int choose = readSelectOption(1, length);
 
     int counter = 1;
     struct Ware *tmp = invoice->wHead;
@@ -393,7 +394,7 @@ void showInvoiceToPaid(struct Invoice *invoice) {
            " [2] Back\n"
            "Your choice:");
 
-    int select = repeatUntilSelectValid(1, 3);
+    int select = readSelectOption(1, 3);
 
     if (select == 1) {
         printf("\nInvoice paid successfully\n");

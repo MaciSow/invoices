@@ -6,8 +6,10 @@
 #include "Ware.h"
 #include "Invoice.h"
 #include "InvoiceBox.h"
-#include "utilities.h"
-#include "Input.h"
+#include "../functions/utilities.h"
+#include "../functions/input.h"
+#include "../functions/output.h"
+
 
 void addInvoice(struct Invoice **invoiceList, struct Invoice *invoice) {
     if (*invoiceList == NULL) {
@@ -67,7 +69,7 @@ struct Invoice *selectInvoice(struct Invoice *invoiceList) {
     printf("Get item number:");
 
     int length = lengthInvoiceList(invoiceList);
-    int choose = repeatUntilSelectValid(1, length);
+    int choose = readSelectOption(1, length);
 
     int counter = 1;
 
@@ -143,7 +145,7 @@ void invoiceOptions(struct Invoice **invoiceList, struct Invoice *invoice) {
                "[3] Back\n"
                "Your choice:");
 
-        int select = repeatUntilSelectValid(1, 3);
+        int select = readSelectOption(1, 3);
 
         switch (select) {
             case 1 :
@@ -183,7 +185,7 @@ void invoiceEditOptions(struct Invoice *invoice) {
 
         printf("Your choice:");
 
-        int select = repeatUntilSelectValid(1, hasWares ? 8 : 7);
+        int select = readSelectOption(1, hasWares ? 8 : 7);
 
         switch (select) {
             case 1 :
@@ -278,7 +280,7 @@ void searchInvoicesByDate(struct Invoice **invoiceList, char date[]) {
     printSeparator(100, '-');
     printf("Get item number:");
 
-    int choose = repeatUntilSelectValid(1, length) - 1;
+    int choose = readSelectOption(1, length) - 1;
     showInvoice(tab[choose]);
     invoiceOptions(&*invoiceList, tab[choose]);
 }
@@ -334,7 +336,7 @@ int searchInvoicesByPaid(struct Invoice **invoiceList) {
     printSeparator(100, '-');
     printf("Which invoice do you want to paid (press 0 to back):");
 
-    int choose = repeatUntilSelectValid(0, length);
+    int choose = readSelectOption(0, length);
 
     if (choose == 0) {
         return 0;

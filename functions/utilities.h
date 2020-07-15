@@ -11,7 +11,6 @@ char *getFutureDate(char dateFormat[],int weeks);
 
 int isNegative(char string[]);
 
-void printSeparator(int n, char separator );
 
 char *concatenationStrings(char a[], char b[]);
 

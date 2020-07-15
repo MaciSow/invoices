@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Address.h"
-#include "Person.h"
-#include "Ware.h"
-#include "Invoice.h"
-#include "InvoiceBox.h"
-#include "Input.h"
+#include "../structures/Address.h"
+#include "../structures/Person.h"
+#include "../structures/Ware.h"
+#include "../structures/Invoice.h"
+#include "../structures/InvoiceBox.h"
+#include "input.h"
 #include "utilities.h"
 
-void readData(struct Invoice **invoiceList) {
+void readDataFromFile(struct Invoice **invoiceList) {
     char string[255];
     FILE *ptr;
 
@@ -193,10 +193,10 @@ float readPercentage() {
     } while (isInvalid);
 
     value = strtof(string, NULL);
-    return value/100;
+    return value / 100;
 }
 
-int repeatUntilSelectValid(int start, int end) {
+int readSelectOption(int start, int end) {
     int isInvalid;
     int select;
 
@@ -212,7 +212,7 @@ int repeatUntilSelectValid(int start, int end) {
     return select;
 }
 
-char *getDate() {
+char *readDate() {
     char *string = malloc(11);
     memset(string, '\0', 11);
     printf("Get date (dd.mm.yyyy):");

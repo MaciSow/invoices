@@ -1,18 +1,18 @@
 #ifndef INVOICE_INPUT_H
 #define INVOICE_INPUT_H
 
-void readData(struct Invoice **invoiceList);
+void readDataFromFile(struct Invoice **invoiceList);
 
 char *readLine(int length);
 
-float readNumber();
-
 int readInteger();
 
-int repeatUntilSelectValid(int start, int end);
+float readNumber();
 
 float readPercentage();
 
-char *getDate();
+char *readDate();
+
+int readSelectOption(int start, int end);
 
 #endif //INVOICE_INPUT_H

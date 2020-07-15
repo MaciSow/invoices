@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "Address.h"
-#include "utilities.h"
-#include "Input.h"
+#include "../functions/utilities.h"
+#include "../functions/input.h"
 
 struct Address *createAddress() {
     struct Address *address;
