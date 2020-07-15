@@ -116,25 +116,25 @@ char *formatAccountNumber(const char *accountNumber) {
     return correctFormat;
 }
 
-void getDataInvoice(struct Invoice *invoice) {
+int getDataInvoice(struct Invoice *invoice) {
     char choose;
     int amountWeeks;
+    int isPaid = 0;
 
     printf("Is paid? [Y/n]:");
     choose = (char) readLine(2)[0];
 
     if (choose == '\n' || choose == 'Y' || choose == 'y') {
-        invoice->paid = 1;
         amountWeeks = 0;
+        isPaid = 1;
     } else {
-        invoice->paid = 0;
         printf("Payment deadline:\n [1] one week\n [2] two weeks\n [3] four weeks\nYour choice:");
 
         amountWeeks = readSelectOption(1, 3);
         amountWeeks = amountWeeks == 3 ? 4 : amountWeeks;
     }
     strcpy(invoice->paymentDeadline, getFutureDate("%d.%m.%Y", amountWeeks));
-
+    return isPaid;
 }
 
 void issuingInvoice(struct Invoice **invoiceList) {
@@ -145,7 +145,7 @@ void issuingInvoice(struct Invoice **invoiceList) {
     struct Address *addressBuyer = createAddress();
 
     strcpy(invoice->documentNumber, generateUniqueID(*invoiceList));
-    getDataInvoice(invoice);
+    int isPaid = getDataInvoice(invoice);
 
     getDataPerson(solder, 1);
     getDataAddress(addressSolder);
@@ -161,7 +161,7 @@ void issuingInvoice(struct Invoice **invoiceList) {
 
     putWareList(invoice);
     calculateSumWares(invoice);
-    invoice->paid = invoice->paid ? invoice->grossSum : 0;
+    invoice->paid = isPaid ? invoice->grossSum : 0;
 
     addInvoice(invoiceList, invoice);
 }
@@ -222,14 +222,16 @@ void deleteInvoice(struct Invoice *invoice) {
 }
 
 void editInvoice(struct Invoice *invoice) {
-    getDataInvoice(invoice);
+    int isPaid = getDataInvoice(invoice);
     char choose;
     printf("Do you want change to current date[Y/n]:");
     choose = (char) readLine(2)[0];
 
     if (choose == '\n' || choose == 'Y' || choose == 'y') {
         strcpy(invoice->date, getCurrentDate("%d.%m.%Y"));
+
     }
+    invoice->paid = isPaid ? invoice->grossSum : 0;
 }
 
 void wareOptions(struct Invoice *invoice, struct Ware *ware) {

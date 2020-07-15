@@ -11,7 +11,6 @@ char *getFutureDate(char dateFormat[],int weeks);
 
 int isNegative(char string[]);
 
-
 char *concatenationStrings(char a[], char b[]);
 
 int isValidDateFormat(const char *date);

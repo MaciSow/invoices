@@ -1,7 +1,7 @@
 #ifndef INVOICE_INPUT_H
 #define INVOICE_INPUT_H
 
-void readDataFromFile(struct Invoice **invoiceList);
+void readDataFromFile(struct Invoice **invoiceList,const char *PATH, char *fileName);
 
 char *readLine(int length);
 

@@ -27,7 +27,7 @@ void addWare(struct Invoice *invoice, struct Ware *ware);
 
 char *formatAccountNumber(const char *accountNumber);
 
-void getDataInvoice(struct Invoice *invoice);
+int getDataInvoice(struct Invoice *invoice);
 
 void putWareList(struct Invoice *invoice);
 

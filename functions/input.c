@@ -9,11 +9,15 @@
 #include "input.h"
 #include "utilities.h"
 
-void readDataFromFile(struct Invoice **invoiceList) {
+void readDataFromFile(struct Invoice **invoiceList, const char *PATH, char *fileName) {
     char string[255];
     FILE *ptr;
 
-    if ((ptr = fopen("C:\\Users\\macie\\Desktop\\invoice\\invoice.txt", "r")) == NULL) {
+    char readPath[100] = {};
+    strcpy(readPath, PATH);
+    strcat(readPath, fileName);
+
+    if ((ptr = fopen(readPath, "r")) == NULL) {
         printf("Error! opening file");
         exit(1);
     }

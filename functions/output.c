@@ -10,11 +10,14 @@
 #include "output.h"
 #include "utilities.h"
 
-void saveDataToFile(struct Invoice **invoiceList) {
-    int num;
+void saveDataToFile(struct Invoice **invoiceList, const char *PATH, char *fileName) {
     FILE *fptr;
 
-    fptr = fopen("C:\\Users\\macie\\Desktop\\invoice\\final.txt", "w");
+    char savePath[100] = {};
+    strcpy(savePath, PATH);
+    strcat(savePath, fileName);
+
+    fptr = fopen(savePath, "w");
 
     if (fptr == NULL) {
         printf("Error!");
@@ -59,7 +62,7 @@ void printPersonData(struct Person *person, FILE *fptr) {
             person->name,
             person->surname
     );
-    if (strcmp(person->accountNumber,"")!=0) {
+    if (strcmp(person->accountNumber, "") != 0) {
         fprintf(fptr, "%s\n", person->accountNumber);
     }
 
@@ -98,4 +101,17 @@ void fprintSeparator(int n, char separator, FILE *fptr) {
     dest[n] = '\0';
     fprintf(fptr, "%s\n", dest);
     free(dest);
+}
+
+void printMenu() {
+    printSeparator(48, '=');
+    printf("%26s\n", "MENU");
+    printSeparator(48, '-');
+    printf("[1] Show Invoices List\n");
+    printf("[2] Issuing Invoice\n");
+    printf("[3] Search Invoice By Date\n");
+    printf("[4] Show Unpaid Invoices\n");
+    printf("[5] Exit\n");
+    printSeparator(48, '-');
+    printf("Your choice:");
 }

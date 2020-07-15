@@ -11,11 +11,13 @@
 #include "functions/output.h"
 
 int main() {
+    const char *PATH = "C:\\Users\\macie\\Desktop\\invoice\\";
+    char fileName[] = "invoice.txt";
+
     struct Invoice *invoiceList;
     invoiceList = NULL;
 
-    readDataFromFile(&invoiceList);
-
+    readDataFromFile(&invoiceList, PATH, fileName);
 //    tests
 
 
@@ -28,16 +30,8 @@ int main() {
 
     while (!isClose) {
         ////MENU////
-        printSeparator(48, '=');
-        printf("%26s\n", "MENU");
-        printSeparator(48, '-');
-        printf("[1] Show Invoices List\n");
-        printf("[2] Issuing Invoice\n");
-        printf("[3] Search Invoice By Date\n");
-        printf("[4] Show Unpaid Invoices\n");
-        printf("[5] Exit\n");
-        printSeparator(48, '-');
-        printf("Your choice:");
+        printMenu();
+
         int choose = readSelectOption(1, 5);
         printSeparator(48, '=');
         printf("\n");
@@ -70,10 +64,17 @@ int main() {
         }
         printf("\n\n");
     }
-    saveDataToFile(&invoiceList);
+
+    printf("Do you want overwrite file [Y/n]:");
+    char choose = (char) readLine(2)[0];
+
+    if (!(choose == '\n' || choose == 'Y' || choose == 'y')) {
+        strcpy(fileName, "final.txt");
+    }
+
+    saveDataToFile(&invoiceList, PATH, fileName);
     return 0;
 }
 
-// todo * zapis do pliku
 // todo * sprzątanie
 // todo * doxygen
