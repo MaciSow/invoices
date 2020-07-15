@@ -221,7 +221,7 @@ void deleteInvoice(struct Invoice *invoice) {
     free(invoice);
 }
 
-void editInvoice(struct Invoice *invoice) {
+void editInvoice(struct Invoice *invoiceList, struct Invoice *invoice) {
     int isPaid = getDataInvoice(invoice);
     char choose;
     printf("Do you want change to current date[Y/n]:");
@@ -229,7 +229,9 @@ void editInvoice(struct Invoice *invoice) {
 
     if (choose == '\n' || choose == 'Y' || choose == 'y') {
         strcpy(invoice->date, getCurrentDate("%d.%m.%Y"));
-
+        char *uniqueId = generateUniqueID(invoiceList);
+        strcpy(invoice->documentNumber, uniqueId);
+        free(uniqueId);
     }
     invoice->paid = isPaid ? invoice->grossSum : 0;
 }

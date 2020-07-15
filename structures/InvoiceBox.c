@@ -149,7 +149,7 @@ void invoiceOptions(struct Invoice **invoiceList, struct Invoice *invoice) {
 
         switch (select) {
             case 1 :
-                invoiceEditOptions(invoice);
+                invoiceEditOptions(*invoiceList,invoice);
                 break;
             case 2:
                 deleteInvoiceFromList(invoiceList, invoice);
@@ -161,7 +161,7 @@ void invoiceOptions(struct Invoice **invoiceList, struct Invoice *invoice) {
     }
 }
 
-void invoiceEditOptions(struct Invoice *invoice) {
+void invoiceEditOptions(struct Invoice *invoiceList, struct Invoice *invoice) {
     int isClose = 0;
     int hasWares;
 
@@ -190,7 +190,7 @@ void invoiceEditOptions(struct Invoice *invoice) {
         switch (select) {
             case 1 :
                 printf("\nEdit invoice data:\n");
-                editInvoice(invoice);
+                editInvoice(invoiceList, invoice);
                 break;
             case 2:
                 printf("\nEdit solder data:\n");

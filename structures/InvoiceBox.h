@@ -15,7 +15,7 @@ void deleteInvoiceFromList(struct Invoice **invoiceList, struct Invoice *invoice
 
 void invoiceOptions(struct Invoice **invoiceList, struct Invoice *invoice);
 
-void invoiceEditOptions(struct Invoice *invoice);
+void invoiceEditOptions(struct Invoice *invoiceList, struct Invoice *invoice);
 
 void searchInvoicesByDate(struct Invoice **invoiceList, char date[]);
 

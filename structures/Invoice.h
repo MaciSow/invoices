@@ -37,7 +37,7 @@ void issuingInvoice(struct Invoice **invoiceList);
 
 void deleteInvoice(struct Invoice *invoice);
 
-void editInvoice(struct Invoice *invoice);
+void editInvoice(struct Invoice *invoiceList ,struct Invoice *invoice);
 
 void wareOptions(struct Invoice *invoice, struct Ware *ware);
 
