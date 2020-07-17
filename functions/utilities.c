@@ -2,7 +2,6 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include "utilities.h"
 
 int checkString(const char *string, char *value) {
@@ -15,30 +14,17 @@ int checkString(const char *string, char *value) {
             return 0;
         }
     }
+
     return 1;
-};
-
-char *cutString(const char *string, int length) {
-    char *cutString = malloc(length);
-    memset(cutString, '\0', length);
-
-    for (int i = 0; i < length - 1; ++i) {
-        cutString[i] = string[i];
-    }
-
-    cutString[length - 1] = '\0';
-
-    return cutString;
 }
 
-void cutString2(char *string, int length) {
+void cutString(char *string, int length) {
     char *cutString = malloc(length);
     memset(cutString, '\0', length);
 
     for (int i = 0; i < length - 1; ++i) {
         cutString[i] = string[i];
     }
-
 
     cutString[length - 1] = '\0';
     strcpy(string, cutString);
@@ -56,7 +42,7 @@ char *getCurrentDate(char dateFormat[]) {
     strftime(date, 11, dateFormat, &local);
 
     return date;
-};
+}
 
 char *getFutureDate(char dateFormat[], int weeks) {
     time_t now;
@@ -68,19 +54,17 @@ char *getFutureDate(char dateFormat[], int weeks) {
     struct tm local = *localtime(&now);
 
     local.tm_sec += weeks * 604800;
-
     mktime(&local);
-
     strftime(date, 11, dateFormat, &local);
 
     return date;
-};
+}
 
 int isNegative(char string[]) {
     float number = strtof(string, NULL);
+
     return number > 0 ? 0 : 1;
 }
-
 
 char *concatenationStrings(char a[], char b[]) {
     char *string = malloc(150);
@@ -89,14 +73,13 @@ char *concatenationStrings(char a[], char b[]) {
     strcat(string, a);
     strcat(string, " ");
     strcat(string, b);
-    strcat(string, "\0");
 
     return string;
 }
 
 
 int isValidDateFormat(const char *date) {
-    int partDate = 0;
+    int partDate;
 
     for (int i = 0; i < 10; ++i) {
         partDate = date[i] - '0';

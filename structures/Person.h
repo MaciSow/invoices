@@ -16,11 +16,9 @@ void
 fillPerson(struct Person *person, struct Address *address, char companyName[], char name[], char surname[], char nip[],
            char accountNumber[]);
 
-void showPerson(struct Person *person);
-
 void deletePerson(struct Person *person);
 
-void getDataPerson(struct Person *person, int isSolder);
+void readDataPerson(struct Person *person, int isSolder);
 
 void editPerson(struct Person *person, int isSolder);
 

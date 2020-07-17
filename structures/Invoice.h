@@ -13,7 +13,6 @@ struct Invoice {
     struct Person *buyer;
     struct Ware *wHead;
     struct Invoice *iNext;
-
 };
 
 struct Invoice *createInvoice();
@@ -27,7 +26,7 @@ void addWare(struct Invoice *invoice, struct Ware *ware);
 
 char *formatAccountNumber(const char *accountNumber);
 
-int getDataInvoice(struct Invoice *invoice);
+int readDataInvoice(struct Invoice *invoice);
 
 void putWareList(struct Invoice *invoice);
 
@@ -37,7 +36,7 @@ void issuingInvoice(struct Invoice **invoiceList);
 
 void deleteInvoice(struct Invoice *invoice);
 
-void editInvoice(struct Invoice *invoiceList ,struct Invoice *invoice);
+void editInvoice(struct Invoice *invoiceList, struct Invoice *invoice);
 
 void wareOptions(struct Invoice *invoice, struct Ware *ware);
 
@@ -49,8 +48,8 @@ int lengthWareList(struct Ware *ware);
 
 void deleteWareFromList(struct Invoice *invoice, struct Ware *ware);
 
-char* generateUniqueID(struct Invoice *invoiceList);
+char *generateUniqueID(struct Invoice *invoiceList);
 
-void showInvoiceToPaid (struct Invoice *invoice);
+void showInvoiceToPaid(struct Invoice *invoice);
 
 #endif //INVOICE_INVOICE_H

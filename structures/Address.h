@@ -12,9 +12,7 @@ struct Address *createAddress();
 
 void fillAddress(struct Address *address, char street[], char homeNumber[], char postalCode[], char city[]);
 
-void showAddress(struct Address *address);
-
-void getDataAddress(struct Address *address);
+void readDataAddress(struct Address *address);
 
 void editAddress(struct Address *address);
 

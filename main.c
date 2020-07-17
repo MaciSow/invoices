@@ -23,9 +23,7 @@ int main() {
 
     readDataFromFile(&invoiceList, PATH, fileName);
 //    tests
-//    saveDataToFile(&invoiceList, PATH, fileName);
 
-//    readDate();
 
 //    return 0;
 
@@ -43,7 +41,7 @@ int main() {
 
         switch (choose) {
             case 1:
-                showShortInvoiceList(invoiceList);
+                showInvoiceList(invoiceList);
                 if (invoiceList == NULL) {
                     break;
                 }
@@ -69,30 +67,15 @@ int main() {
         printf("\n\n");
     }
 
-//    printf("Do you want overwrite file [Y/n]:");
-//    char *str = readLine(2);
-//    char choose = (char) str[0];
-//    free(str);
 
-//    if (!(choose == '\n' || choose == 'Y' || choose == 'y')) {
-//        strcpy(fileName, "final.txt");
-//    }
-
-//    saveDataToFile(&invoiceList, PATH, fileName);
-
-    //function
-    struct Invoice *tmp;
-
-    while (invoiceList!=NULL) {
-        tmp = invoiceList->iNext;
-
-        deleteInvoice(invoiceList);
-        invoiceList = tmp;
+    if (!readYesOrNoOption("Do you want overwrite file")) {
+        strcpy(fileName, "final.txt");
     }
 
-    //end function
+    saveDataToFile(invoiceList, PATH, fileName);
+
+    deleteInvoiceList(&invoiceList);
     return 0;
 }
 
-// todo * sprzątanie
 // todo * doxygen

@@ -1,12 +1,10 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "Address.h"
 #include "Person.h"
 #include "Ware.h"
 #include "Invoice.h"
 #include "InvoiceBox.h"
-#include "../functions/utilities.h"
 #include "../functions/input.h"
 #include "../functions/output.h"
 
@@ -28,21 +26,6 @@ void addInvoice(struct Invoice **invoiceList, struct Invoice *invoice) {
 }
 
 void showInvoiceList(struct Invoice *invoiceList) {
-    if (invoiceList == NULL) {
-        printf("List is empty");
-        return;
-    }
-
-    struct Invoice *tmp = invoiceList;
-
-    do {
-        showInvoice(tmp);
-
-        tmp = tmp->iNext;
-    } while (tmp != NULL);
-}
-
-void showShortInvoiceList(struct Invoice *invoiceList) {
     printf("Invoice's List\n");
     printSeparator(100, '-');
 
@@ -70,14 +53,15 @@ struct Invoice *selectInvoice(struct Invoice *invoiceList) {
 
     int length = lengthInvoiceList(invoiceList);
     int choose = readSelectOption(1, length);
-
     int counter = 1;
 
     struct Invoice *tmp = invoiceList;
+
     while (counter != choose) {
         tmp = tmp->iNext;
         counter++;
     }
+
     return tmp;
 }
 
@@ -149,7 +133,7 @@ void invoiceOptions(struct Invoice **invoiceList, struct Invoice *invoice) {
 
         switch (select) {
             case 1 :
-                invoiceEditOptions(*invoiceList,invoice);
+                invoiceEditOptions(*invoiceList, invoice);
                 break;
             case 2:
                 deleteInvoiceFromList(invoiceList, invoice);
@@ -211,9 +195,10 @@ void invoiceEditOptions(struct Invoice *invoiceList, struct Invoice *invoice) {
             case 6:
                 printf("\nAdd ware:\n");
                 struct Ware *ware = createWare();
-                getDataWare(ware);
+                readDataWare(ware);
                 calculateValuesWare(ware);
                 addWare(invoice, ware);
+
                 calculateSumWares(invoice);
                 break;
             case 7:
@@ -225,6 +210,7 @@ void invoiceEditOptions(struct Invoice *invoiceList, struct Invoice *invoice) {
                 showWareList(invoice);
                 struct Ware *selectedWare = selectWare(invoice);
                 wareOptions(invoice, selectedWare);
+
                 calculateSumWares(invoice);
                 break;
             default:
@@ -246,6 +232,7 @@ void searchInvoicesByDate(struct Invoice **invoiceList, char date[]) {
 
     int length = 0;
     struct Invoice *tmp = *invoiceList;
+
     while (tmp) {
         if (!strcmp(tmp->date, date)) {
             length++;
@@ -262,6 +249,7 @@ void searchInvoicesByDate(struct Invoice **invoiceList, char date[]) {
 
     int index = 0;
     tmp = *invoiceList;
+
     while (tmp) {
         if (!strcmp(tmp->date, date)) {
             tab[index] = tmp;
@@ -319,7 +307,6 @@ int searchInvoicesByPaid(struct Invoice **invoiceList) {
         tmp = tmp->iNext;
     }
 
-
     printf("Invoice's List\n");
     printSeparator(100, '-');
 
@@ -345,4 +332,15 @@ int searchInvoicesByPaid(struct Invoice **invoiceList) {
     showInvoiceToPaid(tab[choose]);
 
     return 1;
+}
+
+void deleteInvoiceList(struct Invoice **invoiceList){
+    struct Invoice *tmp;
+
+    while (*invoiceList != NULL) {
+        tmp = (*invoiceList)->iNext;
+
+        deleteInvoice(*invoiceList);
+        *invoiceList = tmp;
+    }
 }

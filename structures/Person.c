@@ -20,13 +20,13 @@ struct Person *createPerson() {
 
 void fillPerson(struct Person *person, struct Address *address, char companyName[], char name[], char surname[],
                 char nip[], char accountNumber[]) {
+    cutString(companyName, 50);
+    cutString(name, 50);
+    cutString(surname, 50);
+    cutString(nip, 11);
 
-    cutString2(companyName, 50);
-    cutString2(name, 50);
-    cutString2(surname, 50);
-    cutString2(nip, 11);
     if (strcmp(accountNumber, "---") != 0) {
-        cutString2(accountNumber, 27);
+        cutString(accountNumber, 27);
         strcpy(person->accountNumber, accountNumber);
     }
 
@@ -35,32 +35,8 @@ void fillPerson(struct Person *person, struct Address *address, char companyName
     strcpy(person->surname, surname);
     strcpy(person->nip, nip);
 
-//    strcpy(person->companyName, cutString(companyName, 50));
-//    strcpy(person->name, cutString(name, 50));
-//    strcpy(person->surname, cutString(surname, 50));
-//    strcpy(person->nip, cutString(nip, 11));
-//    strcpy(person->accountNumber, cutString(accountNumber, 27));
     person->address = address;
 }
-
-void showPerson(struct Person *person) {
-    if (isCompany(person)) {
-        printf("    %s\t%s\n    %s %s",
-               person->companyName,
-               person->nip,
-               person->name,
-               person->surname
-        );
-    } else {
-        printf("    %s %s",
-               person->name,
-               person->surname
-        );
-    }
-
-    printf("\n\n    Address:\n");
-    showAddress(person->address);
-};
 
 void showPersonsTogether(struct Person *solder, struct Person *buyer) {
     char *solderData = getLinePerson(solder);
@@ -92,67 +68,64 @@ void deletePerson(struct Person *person) {
     free(person);
 }
 
-void getDataPerson(struct Person *person, int isSolder) {
-    char isCompany;
+void readDataPerson(struct Person *person, int isSolder) {
+    int isCompany;
 
     if (isSolder) {
         printf("\nSolder\n");
     } else {
-        printf("\nBuyer\nDo you have company? [Y/n]:");
-
-        char key[2];
-        readLine2(key, 2);
-        isCompany = (char) key[0];
+        printf("\nBuyer\n");
+        isCompany = readYesOrNoOption("Do you have company?");
     }
 
-    if (isSolder || isCompany == '\n' || isCompany == 'Y' || isCompany == 'y') {
+    if (isSolder || isCompany) {
         printf("Company name:");
-        readLine2(person->companyName, 50);
+        readLine(person->companyName, 50);
 
         printf("NIP:");
-        readLine2(person->nip, 11);
+        readLine(person->nip, 11);
     }
 
     printf("Name:");
-    readLine2(person->name, 50);
+    readLine(person->name, 50);
 
     printf("Surname:");
-    readLine2(person->surname, 50);
+    readLine(person->surname, 50);
 
     if (isSolder) {
         printf("Account Number:");
-        readLine2(person->accountNumber, 27);
+        readLine(person->accountNumber, 27);
     }
 }
 
 void editPerson(struct Person *person, int isSolder) {
-    getDataPerson(person, isSolder);
+    readDataPerson(person, isSolder);
 }
 
 void showPersonsInLine(struct Person *solder, struct Person *buyer) {
     char *nameWithSurname = concatenationStrings(solder->name, solder->surname);
-    printf("         Solder: %-20s %-30s\n", solder->companyName, nameWithSurname);
+    printf("%16s %-20s %-30s\n", "Solder:", solder->companyName, nameWithSurname);
     free(nameWithSurname);
 
     nameWithSurname = concatenationStrings(buyer->name, buyer->surname);
-    printf("         Buyer:  %-20s %-30s", isCompany(buyer) ? buyer->companyName : "", nameWithSurname);
+    printf("%16s %-20s %-30s", "Buyer:", isCompany(buyer) ? buyer->companyName : "", nameWithSurname);
     free(nameWithSurname);
 }
 
 char *getLinePerson(struct Person *person) {
-    char *string = malloc(150);
-    memset(string, '\0', 150);
+    char *lineString = malloc(150);
+    memset(lineString, '\0', 150);
 
     if (isCompany(person)) {
-        strcpy(string, person->companyName);
-        strcat(string, " ");
+        strcpy(lineString, person->companyName);
+        strcat(lineString, " ");
     }
-    strcat(string, person->name);
-    strcat(string, " ");
-    strcat(string, person->surname);
-    strcat(string, "\0");
+    strcat(lineString, person->name);
+    strcat(lineString, " ");
+    strcat(lineString, person->surname);
+    strcat(lineString, "\0");
 
-    return string;
+    return lineString;
 }
 
 int isCompany(struct Person *person) {

@@ -18,10 +18,10 @@ void fillWare(struct Ware *ware, char name[], char amount[], char netPrice[], ch
 
 void showWare(struct Ware *ware, int i);
 
-void getDataWare(struct Ware *ware);
-
-void calculateValuesWare (struct Ware *ware);
+void readDataWare(struct Ware *ware);
 
 void editWare(struct Ware *ware);
+
+void calculateValuesWare (struct Ware *ware);
 
 #endif //INVOICE_WARE_H

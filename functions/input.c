@@ -110,7 +110,6 @@ void readDataFromFile(struct Invoice **invoiceList, const char *PATH, char *file
 
                 fillWare(ware, wareData[0], wareData[1], wareData[2], wareData[3]);
                 addWare(invoice, ware);
-
                 break;
 
             case 3 :
@@ -124,41 +123,19 @@ void readDataFromFile(struct Invoice **invoiceList, const char *PATH, char *file
                     }
                 }
                 break;
+
             default:
                 break;
         }
+
         start = 0;
     }
+
     fclose(ptr);
     printf("\n\nFile read done\n%i invoices loaded\n", counter);
 }
 
-char *readLine(int length) {
-    char *str = malloc(length);
-    memset(str, '\0', length);
-
-    char letter;
-    do {
-        letter = (char) getchar();
-    } while (letter == '\n');
-
-    int i = 0;
-
-    while (letter != '\n') {
-
-        if (i < length - 1) {
-            str[i] = letter;
-        }
-
-        i++;
-        letter = (char) getchar();
-    }
-
-    str[length - 1] = '\0';
-    return str;
-}
-
-void readLine2(char *target, int length) {
+void readLine(char *target, int length) {
     memset(target, '\0', length);
 
     char letter;
@@ -185,7 +162,7 @@ int readInteger() {
     char *str = malloc(15);
     memset(str, '\0', 15);
 
-    readLine2(str, 15);
+    readLine(str, 15);
 
     int value = strtol(str, NULL, 10);
     free(str);
@@ -200,7 +177,7 @@ float readNumber() {
 
     do {
         isInvalid = 0;
-        readLine2(string, 15);
+        readLine(string, 15);
 
         if (isNegative(string)) {
             isInvalid = 1;
@@ -209,6 +186,7 @@ float readNumber() {
     } while (isInvalid);
 
     value = strtof(string, NULL);
+
     return value;
 }
 
@@ -219,7 +197,7 @@ float readPercentage() {
 
     do {
         isInvalid = 0;
-        readLine2(string, 4);
+        readLine(string, 4);
 
         if (strtof(string, NULL) >= 0 ? 0 : 1) {
             isInvalid = 1;
@@ -228,7 +206,31 @@ float readPercentage() {
     } while (isInvalid);
 
     value = strtof(string, NULL);
+
     return value / 100;
+}
+
+char *readDate() {
+    char *string = malloc(11);
+    memset(string, '\0', 11);
+
+    printf("Get date (dd.mm.yyyy):");
+
+    int isValid;
+    while (1) {
+        readLine(string, 11);
+
+        isValid = isValidDateFormat(string);
+        isValid += isValidDatePart(string, 0, 2, 1, 31);
+        isValid += isValidDatePart(string, 3, 2, 1, 12);
+        isValid += isValidDatePart(string, 6, 4, 1970, 9999);
+
+        if (isValid == 4) {
+            return string;
+        }
+
+        printf("    - wrong data, try again:");
+    }
 }
 
 int readSelectOption(int start, int end) {
@@ -247,24 +249,15 @@ int readSelectOption(int start, int end) {
     return select;
 }
 
-char *readDate() {
-    char *string = malloc(11);
-    memset(string, '\0', 11);
-    printf("Get date (dd.mm.yyyy):");
+int readYesOrNoOption(char text[]) {
+    printf("%s [Y/n]:", text);
 
-    int isValid = 0;
-    while (1) {
-        readLine2(string, 11);
+    char str[2];
+    readLine(str, 2);
+    char choose = (char) str[0];
 
-        isValid = isValidDateFormat(string);
-        isValid += isValidDatePart(string, 0, 2, 1, 31);
-        isValid += isValidDatePart(string, 3, 2, 1, 12);
-        isValid += isValidDatePart(string, 6, 4, 1970, 9999);
-
-        if (isValid == 4) {
-            return string;
-        }
-
-        printf("    - wrong data, try again:");
+    if (choose == 'N' || choose == 'n') {
+        return 0;
     }
+    return 1;
 }

@@ -14,7 +14,7 @@ struct Ware *createWare() {
 }
 
 void fillWare(struct Ware *ware, char name[], char amount[], char netPrice[], char tax[]) {
-    cutString2(name, 150);
+    cutString(name, 150);
 
     strcpy(ware->name, name);
     ware->amount = strtol(amount, NULL, 10);
@@ -35,9 +35,9 @@ void showWare(struct Ware *ware, int i) {
            ware->grossValue);
 }
 
-void getDataWare(struct Ware *ware) {
+void readDataWare(struct Ware *ware) {
     printf("Name:");
-    readLine2(ware->name, 150);
+    readLine(ware->name, 150);
 
     printf("Amount:");
     ware->amount = (int) readNumber();
@@ -49,13 +49,13 @@ void getDataWare(struct Ware *ware) {
     ware->tax = readPercentage();
 }
 
+void editWare(struct Ware *ware) {
+    readDataWare(ware);
+    calculateValuesWare(ware);
+}
+
 void calculateValuesWare(struct Ware *ware) {
     ware->netValue = ware->netPrice * (float) ware->amount;
     ware->taxValue = ware->netValue * ware->tax;
     ware->grossValue = ware->netValue + ware->taxValue;
-}
-
-void editWare(struct Ware *ware) {
-    getDataWare(ware);
-    calculateValuesWare(ware);
 }

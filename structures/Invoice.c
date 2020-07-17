@@ -30,8 +30,8 @@ struct Invoice *createInvoice() {
 
 void
 fillInvoice(struct Invoice *invoice, struct Person *solder, struct Person *buyer, char documentNumber[], char date[]) {
-    cutString2(documentNumber, 20);
-    cutString2(date, 20);
+    cutString(documentNumber, 20);
+    cutString(date, 20);
 
     strcpy(invoice->documentNumber, documentNumber);
     strcpy(invoice->date, date);
@@ -127,17 +127,11 @@ char *formatAccountNumber(const char *accountNumber) {
     return correctFormat;
 }
 
-int getDataInvoice(struct Invoice *invoice) {
-    char choose;
+int readDataInvoice(struct Invoice *invoice) {
     int amountWeeks;
     int isPaid = 0;
 
-    printf("Is paid? [Y/n]:");
-    char key[2];
-    readLine2(key, 2);
-    choose = (char) key[0];
-
-    if (choose == '\n' || choose == 'Y' || choose == 'y') {
+    if (readYesOrNoOption("Is paid?")) {
         amountWeeks = 0;
         isPaid = 1;
     } else {
@@ -165,13 +159,13 @@ void issuingInvoice(struct Invoice **invoiceList) {
     strcpy(invoice->documentNumber, id);
     free(id);
 
-    int isPaid = getDataInvoice(invoice);
+    int isPaid = readDataInvoice(invoice);
 
-    getDataPerson(solder, 1);
-    getDataAddress(addressSolder);
+    readDataPerson(solder, 1);
+    readDataAddress(addressSolder);
 
-    getDataPerson(buyer, 0);
-    getDataAddress(addressBuyer);
+    readDataPerson(buyer, 0);
+    readDataAddress(addressBuyer);
 
     solder->address = addressSolder;
     invoice->solder = solder;
@@ -188,23 +182,17 @@ void issuingInvoice(struct Invoice **invoiceList) {
 
 void putWareList(struct Invoice *invoice) {
     int isEnd;
-    char choose;
 
     do {
         printf("\nWare\n");
         isEnd = 0;
 
         struct Ware *ware = createWare();
-        getDataWare(ware);
+        readDataWare(ware);
         calculateValuesWare(ware);
         addWare(invoice, ware);
 
-        printf("\nAdd another ware? [Y/n]:");
-        char key[2];
-        readLine2(key, 2);
-        choose = (char) key[0];
-
-        if (choose == '\n' || choose == 'Y' || choose == 'y') {
+        if (readYesOrNoOption("\nAdd another ware?")) {
             isEnd = 1;
         }
 
@@ -244,14 +232,9 @@ void deleteInvoice(struct Invoice *invoice) {
 }
 
 void editInvoice(struct Invoice *invoiceList, struct Invoice *invoice) {
-    int isPaid = getDataInvoice(invoice);
-    char choose;
-    printf("Do you want change to current date[Y/n]:");
-    char key[2];
-    readLine2(key, 2);
-    choose = (char) key[0];
+    int isPaid = readDataInvoice(invoice);
 
-    if (choose == '\n' || choose == 'Y' || choose == 'y') {
+    if (readYesOrNoOption("Do you want change to current date")) {
         char *currentDate = getCurrentDate("%d/%m/%Y");
         char *uniqueId = generateUniqueID(invoiceList);
 
@@ -283,7 +266,6 @@ void wareOptions(struct Invoice *invoice, struct Ware *ware) {
         default:
             break;
     }
-
 }
 
 void showWareList(struct Invoice *invoice) {
@@ -300,7 +282,7 @@ void showWareList(struct Invoice *invoice) {
 }
 
 struct Ware *selectWare(struct Invoice *invoice) {
-    printf("Get item number: ");
+    printf("Get item number:");
 
     int length = lengthWareList(invoice->wHead);
     int choose = readSelectOption(1, length);
