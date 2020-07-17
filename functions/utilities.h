@@ -3,6 +3,8 @@
 
 char *cutString(const char *string, int length);
 
+void cutString2(char *string, int length);
+
 int checkString(const char *string, char *value);
 
 char *getCurrentDate(char dateFormat[]);

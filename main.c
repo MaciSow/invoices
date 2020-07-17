@@ -1,6 +1,6 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 #include "structures/Person.h"
 #include "structures/Ware.h"
 #include "structures/Invoice.h"
@@ -11,7 +11,11 @@
 #include "functions/output.h"
 
 int main() {
-    const char *PATH = "C:\\Users\\macie\\Desktop\\invoice\\";
+
+
+//    return 0;
+
+    const char *PATH = "";
     char fileName[] = "invoice.txt";
 
     struct Invoice *invoiceList;
@@ -19,7 +23,7 @@ int main() {
 
     readDataFromFile(&invoiceList, PATH, fileName);
 //    tests
-
+//    saveDataToFile(&invoiceList, PATH, fileName);
 
 //    readDate();
 
@@ -65,14 +69,28 @@ int main() {
         printf("\n\n");
     }
 
-    printf("Do you want overwrite file [Y/n]:");
-    char choose = (char) readLine(2)[0];
+//    printf("Do you want overwrite file [Y/n]:");
+//    char *str = readLine(2);
+//    char choose = (char) str[0];
+//    free(str);
 
-    if (!(choose == '\n' || choose == 'Y' || choose == 'y')) {
-        strcpy(fileName, "final.txt");
+//    if (!(choose == '\n' || choose == 'Y' || choose == 'y')) {
+//        strcpy(fileName, "final.txt");
+//    }
+
+//    saveDataToFile(&invoiceList, PATH, fileName);
+
+    //function
+    struct Invoice *tmp;
+
+    while (invoiceList!=NULL) {
+        tmp = invoiceList->iNext;
+
+        deleteInvoice(invoiceList);
+        invoiceList = tmp;
     }
 
-    saveDataToFile(&invoiceList, PATH, fileName);
+    //end function
     return 0;
 }
 

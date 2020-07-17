@@ -5,6 +5,8 @@ void readDataFromFile(struct Invoice **invoiceList,const char *PATH, char *fileN
 
 char *readLine(int length);
 
+void readLine2(char *target, int length);
+
 int readInteger();
 
 float readNumber();

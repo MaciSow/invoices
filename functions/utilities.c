@@ -31,6 +31,20 @@ char *cutString(const char *string, int length) {
     return cutString;
 }
 
+void cutString2(char *string, int length) {
+    char *cutString = malloc(length);
+    memset(cutString, '\0', length);
+
+    for (int i = 0; i < length - 1; ++i) {
+        cutString[i] = string[i];
+    }
+
+
+    cutString[length - 1] = '\0';
+    strcpy(string, cutString);
+    free(cutString);
+}
+
 char *getCurrentDate(char dateFormat[]) {
     time_t now;
     time(&now);

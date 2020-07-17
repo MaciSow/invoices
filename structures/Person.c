@@ -20,11 +20,26 @@ struct Person *createPerson() {
 
 void fillPerson(struct Person *person, struct Address *address, char companyName[], char name[], char surname[],
                 char nip[], char accountNumber[]) {
-    strcpy(person->companyName, cutString(companyName, 50));
-    strcpy(person->name, cutString(name, 50));
-    strcpy(person->surname, cutString(surname, 50));
-    strcpy(person->nip, cutString(nip, 11));
-    strcpy(person->accountNumber, cutString(accountNumber, 27));
+
+    cutString2(companyName, 50);
+    cutString2(name, 50);
+    cutString2(surname, 50);
+    cutString2(nip, 11);
+    if (strcmp(accountNumber, "---") != 0) {
+        cutString2(accountNumber, 27);
+        strcpy(person->accountNumber, accountNumber);
+    }
+
+    strcpy(person->companyName, companyName);
+    strcpy(person->name, name);
+    strcpy(person->surname, surname);
+    strcpy(person->nip, nip);
+
+//    strcpy(person->companyName, cutString(companyName, 50));
+//    strcpy(person->name, cutString(name, 50));
+//    strcpy(person->surname, cutString(surname, 50));
+//    strcpy(person->nip, cutString(nip, 11));
+//    strcpy(person->accountNumber, cutString(accountNumber, 27));
     person->address = address;
 }
 
@@ -68,7 +83,7 @@ void showPersonsTogether(struct Person *solder, struct Person *buyer) {
 
     printf("\n%10s: %-40s", "NIP", solder->nip);
     if (isCompany(buyer)) {
-        printf("%10s: %-40s", "NIP", buyerData);
+        printf("%10s: %-40s", "NIP", buyer->nip);
     }
 }
 
@@ -84,27 +99,29 @@ void getDataPerson(struct Person *person, int isSolder) {
         printf("\nSolder\n");
     } else {
         printf("\nBuyer\nDo you have company? [Y/n]:");
-        isCompany = (char) readLine(2)[0];
+
+        char key[2];
+        readLine2(key, 2);
+        isCompany = (char) key[0];
     }
 
     if (isSolder || isCompany == '\n' || isCompany == 'Y' || isCompany == 'y') {
-
         printf("Company name:");
-        strcpy(person->companyName, readLine(50));
+        readLine2(person->companyName, 50);
 
         printf("NIP:");
-        strcpy(person->nip, readLine(11));
+        readLine2(person->nip, 11);
     }
 
     printf("Name:");
-    strcpy(person->name, readLine(50));
+    readLine2(person->name, 50);
 
     printf("Surname:");
-    strcpy(person->surname, readLine(50));
+    readLine2(person->surname, 50);
 
     if (isSolder) {
         printf("Account Number:");
-        strcpy(person->accountNumber, readLine(27));
+        readLine2(person->accountNumber, 27);
     }
 }
 

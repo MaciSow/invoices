@@ -14,10 +14,12 @@ struct Ware *createWare() {
 }
 
 void fillWare(struct Ware *ware, char name[], char amount[], char netPrice[], char tax[]) {
-    strcpy(ware->name, cutString(name,150));
+    cutString2(name, 150);
+
+    strcpy(ware->name, name);
     ware->amount = strtol(amount, NULL, 10);
     ware->netPrice = strtof(netPrice, NULL);
-    ware->tax = strtof(tax, NULL)/100;
+    ware->tax = strtof(tax, NULL) / 100;
     calculateValuesWare(ware);
 }
 
@@ -28,14 +30,14 @@ void showWare(struct Ware *ware, int i) {
            ware->amount,
            ware->netPrice,
            ware->netValue,
-           ware->tax*100,
+           ware->tax * 100,
            ware->taxValue,
            ware->grossValue);
 }
 
 void getDataWare(struct Ware *ware) {
     printf("Name:");
-    strcpy(ware->name, readLine(150));
+    readLine2(ware->name, 150);
 
     printf("Amount:");
     ware->amount = (int) readNumber();
@@ -48,12 +50,12 @@ void getDataWare(struct Ware *ware) {
 }
 
 void calculateValuesWare(struct Ware *ware) {
-    ware->netValue = ware->netPrice*(float)ware->amount;
+    ware->netValue = ware->netPrice * (float) ware->amount;
     ware->taxValue = ware->netValue * ware->tax;
     ware->grossValue = ware->netValue + ware->taxValue;
 }
 
-void editWare(struct Ware *ware){
+void editWare(struct Ware *ware) {
     getDataWare(ware);
     calculateValuesWare(ware);
 }

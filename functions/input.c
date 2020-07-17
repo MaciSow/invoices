@@ -50,10 +50,10 @@ void readDataFromFile(struct Invoice **invoiceList, const char *PATH, char *file
 
             struct Person *buyer = createPerson();
             fillPerson(buyer, addressBuyer, invoiceData[11], invoiceData[13], invoiceData[14],
-                       invoiceData[12], "");
+                       invoiceData[12], "---");
 
             invoice = createInvoice();
-            fillInvoice(invoice, solder, buyer, invoiceData[0], invoiceData[1], "", "0");
+            fillInvoice(invoice, solder, buyer, invoiceData[0], invoiceData[1]);
 
             section = 2;
             continue;
@@ -158,8 +158,39 @@ char *readLine(int length) {
     return str;
 }
 
+void readLine2(char *target, int length) {
+    memset(target, '\0', length);
+
+    char letter;
+    do {
+        letter = (char) getchar();
+    } while (letter == '\n');
+
+    int i = 0;
+
+    while (letter != '\n') {
+
+        if (i < length - 1) {
+            target[i] = letter;
+        }
+
+        i++;
+        letter = (char) getchar();
+    }
+
+    target[length - 1] = '\0';
+}
+
 int readInteger() {
-    return strtol(readLine(15), NULL, 10);
+    char *str = malloc(15);
+    memset(str, '\0', 15);
+
+    readLine2(str, 15);
+
+    int value = strtol(str, NULL, 10);
+    free(str);
+
+    return value;
 }
 
 float readNumber() {
@@ -169,7 +200,7 @@ float readNumber() {
 
     do {
         isInvalid = 0;
-        strcpy(string, readLine(15));
+        readLine2(string, 15);
 
         if (isNegative(string)) {
             isInvalid = 1;
@@ -188,9 +219,9 @@ float readPercentage() {
 
     do {
         isInvalid = 0;
-        strcpy(string, readLine(4));
+        readLine2(string, 4);
 
-        if (strtof(string, NULL) > 0 ? 0 : 1) {
+        if (strtof(string, NULL) >= 0 ? 0 : 1) {
             isInvalid = 1;
             printf("    - wrong data, try again:");
         }
@@ -223,7 +254,7 @@ char *readDate() {
 
     int isValid = 0;
     while (1) {
-        strcpy(string, readLine(11));
+        readLine2(string, 11);
 
         isValid = isValidDateFormat(string);
         isValid += isValidDatePart(string, 0, 2, 1, 31);

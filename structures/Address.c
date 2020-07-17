@@ -13,10 +13,20 @@ struct Address *createAddress() {
 }
 
 void fillAddress(struct Address *address, char street[], char homeNumber[], char postalCode[], char city[]) {
-    strcpy(address->street, cutString(street,50));
-    strcpy(address->homeNumber, cutString(homeNumber,10));
-    strcpy(address->postalCode, cutString(postalCode,10));
-    strcpy(address->city, cutString(city,50));
+    cutString2(street, 50);
+    cutString2(homeNumber, 10);
+    cutString2(postalCode, 10);
+    cutString2(city, 50);
+
+    strcpy(address->street, street);
+    strcpy(address->homeNumber, homeNumber);
+    strcpy(address->postalCode, postalCode);
+    strcpy(address->city, city);
+
+//    strcpy(address->street, (street,50));
+//    strcpy(address->homeNumber, cutString(homeNumber,10));
+//    strcpy(address->postalCode, cutString(postalCode,10));
+//    strcpy(address->city, cutString(city,50));
 };
 
 void showAddress(struct Address *address) {
@@ -29,18 +39,18 @@ void showAddress(struct Address *address) {
 
 void getDataAddress(struct Address *address) {
     printf("Street:");
-    strcpy(address->street, readLine(50));
+    readLine2(address->street, 50);
 
     printf("Home number:");
-    strcpy(address->homeNumber, readLine(10));
+    readLine2(address->homeNumber, 10);
 
     printf("Postal code:");
-    strcpy(address->postalCode, readLine(7));
+    readLine2(address->postalCode, 7);
 
     printf("City:");
-    strcpy(address->city, readLine(50));
+    readLine2(address->city, 50);
 }
 
-void editAddress(struct Address *address){
+void editAddress(struct Address *address) {
     getDataAddress(address);
 }

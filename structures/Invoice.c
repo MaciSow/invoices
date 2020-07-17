@@ -13,28 +13,36 @@
 struct Invoice *createInvoice() {
     struct Invoice *invoice;
     invoice = (struct Invoice *) malloc(sizeof(struct Invoice));
+    char *currentDate = getCurrentDate("%d.%m.%Y");
 
     strcpy(invoice->documentNumber, "");
-    strcpy(invoice->date, getCurrentDate("%d.%m.%Y"));
+    strcpy(invoice->date, currentDate);
+    strcpy(invoice->paymentDeadline, "");
     invoice->netSum = 0;
     invoice->taxSum = 0;
     invoice->grossSum = 0;
+    invoice->paid = 0;
     invoice->wHead = NULL;
 
+    free(currentDate);
     return invoice;
 }
 
-void fillInvoice(struct Invoice *invoice, struct Person *solder, struct Person *buyer, char documentNumber[],
-                 char date[], char paymentDeadline[], char paid[]) {
-    strcpy(invoice->documentNumber, cutString(documentNumber, 20));
-    strcpy(invoice->date, cutString(date, 20));
-    strcpy(invoice->paymentDeadline, cutString(paymentDeadline, 20));
-    invoice->paid = strtof(paid, NULL);
+void
+fillInvoice(struct Invoice *invoice, struct Person *solder, struct Person *buyer, char documentNumber[], char date[]) {
+    cutString2(documentNumber, 20);
+    cutString2(date, 20);
+
+    strcpy(invoice->documentNumber, documentNumber);
+    strcpy(invoice->date, date);
+
     invoice->solder = solder;
     invoice->buyer = buyer;
-};
+}
 
 void showInvoice(struct Invoice *invoice) {
+    char *formattedAccountNumber = formatAccountNumber(invoice->solder->accountNumber);
+
     printf("\n");
     printSeparator(100, '=');
 
@@ -69,8 +77,9 @@ void showInvoice(struct Invoice *invoice) {
            invoice->netSum,
            invoice->taxSum,
            invoice->grossSum,
+
            "Account Number:",
-           formatAccountNumber(invoice->solder->accountNumber),
+           formattedAccountNumber,
            "Payment Deadline:",
            invoice->paymentDeadline,
            "Paid:",
@@ -78,6 +87,8 @@ void showInvoice(struct Invoice *invoice) {
     );
     printf("\n");
     printSeparator(100, '=');
+
+    free(formattedAccountNumber);
 }
 
 void addWare(struct Invoice *invoice, struct Ware *ware) {
@@ -122,7 +133,9 @@ int getDataInvoice(struct Invoice *invoice) {
     int isPaid = 0;
 
     printf("Is paid? [Y/n]:");
-    choose = (char) readLine(2)[0];
+    char key[2];
+    readLine2(key, 2);
+    choose = (char) key[0];
 
     if (choose == '\n' || choose == 'Y' || choose == 'y') {
         amountWeeks = 0;
@@ -133,7 +146,11 @@ int getDataInvoice(struct Invoice *invoice) {
         amountWeeks = readSelectOption(1, 3);
         amountWeeks = amountWeeks == 3 ? 4 : amountWeeks;
     }
-    strcpy(invoice->paymentDeadline, getFutureDate("%d.%m.%Y", amountWeeks));
+
+    char *futureDate = getFutureDate("%d.%m.%Y", amountWeeks);
+    strcpy(invoice->paymentDeadline, futureDate);
+    free(futureDate);
+
     return isPaid;
 }
 
@@ -144,7 +161,10 @@ void issuingInvoice(struct Invoice **invoiceList) {
     struct Address *addressSolder = createAddress();
     struct Address *addressBuyer = createAddress();
 
-    strcpy(invoice->documentNumber, generateUniqueID(*invoiceList));
+    char *id = generateUniqueID(*invoiceList);
+    strcpy(invoice->documentNumber, id);
+    free(id);
+
     int isPaid = getDataInvoice(invoice);
 
     getDataPerson(solder, 1);
@@ -180,9 +200,11 @@ void putWareList(struct Invoice *invoice) {
         addWare(invoice, ware);
 
         printf("\nAdd another ware? [Y/n]:");
-        choose = (char) readLine(2)[0];
+        char key[2];
+        readLine2(key, 2);
+        choose = (char) key[0];
 
-        if (choose == '\n' || strlwr(&choose)[0] == 'y') {
+        if (choose == '\n' || choose == 'Y' || choose == 'y') {
             isEnd = 1;
         }
 
@@ -225,12 +247,18 @@ void editInvoice(struct Invoice *invoiceList, struct Invoice *invoice) {
     int isPaid = getDataInvoice(invoice);
     char choose;
     printf("Do you want change to current date[Y/n]:");
-    choose = (char) readLine(2)[0];
+    char key[2];
+    readLine2(key, 2);
+    choose = (char) key[0];
 
     if (choose == '\n' || choose == 'Y' || choose == 'y') {
-        strcpy(invoice->date, getCurrentDate("%d.%m.%Y"));
+        char *currentDate = getCurrentDate("%d/%m/%Y");
         char *uniqueId = generateUniqueID(invoiceList);
+
+        strcpy(invoice->date, currentDate);
         strcpy(invoice->documentNumber, uniqueId);
+
+        free(currentDate);
         free(uniqueId);
     }
     invoice->paid = isPaid ? invoice->grossSum : 0;
@@ -344,7 +372,10 @@ void deleteWareFromList(struct Invoice *invoice, struct Ware *ware) {
 char *generateUniqueID(struct Invoice *invoiceList) {
     char *uniqueId = malloc(16);
     memset(uniqueId, '\0', 16);
-    strcpy(uniqueId, getCurrentDate("%d/%m/%Y"));
+
+    char *currentDate = getCurrentDate("%d/%m/%Y");
+    strcpy(uniqueId, currentDate);
+    free(currentDate);
 
     if (invoiceList == NULL) {
         strcat(uniqueId, "/0000");
@@ -360,7 +391,7 @@ char *generateUniqueID(struct Invoice *invoiceList) {
         current[10] = '\0';
 
         if (checkString(uniqueId, current)) {
-            int currentId = 0;
+            int currentId;
             char currentIdString[5];
 
             strncpy(currentIdString, tmp->documentNumber + 11, 4);
@@ -388,10 +419,13 @@ void showInvoiceToPaid(struct Invoice *invoice) {
            invoice->solder->address->homeNumber, "", invoice->solder->address->postalCode,
            invoice->solder->address->city);
 
-    printf("%28s: %s\n", "Beneficiary's account number", formatAccountNumber(invoice->solder->accountNumber));
+    char *formattedAccountNumber = formatAccountNumber(invoice->solder->accountNumber);
+    char *currentDate = getCurrentDate("%d.%m.%Y");
+
+    printf("%28s: %s\n", "Beneficiary's account number", formattedAccountNumber);
     printf("%28s: %s\n", "Title", invoice->documentNumber);
     printf("%28s: %.2f\n", "Amount", (invoice->grossSum - invoice->paid));
-    printf("%28s: %s\n", "Date", getCurrentDate("%d.%m.%Y"));
+    printf("%28s: %s\n", "Date", currentDate);
 
     printf("\nWhat next?\n"
            " [1] Paid\n"
@@ -404,4 +438,7 @@ void showInvoiceToPaid(struct Invoice *invoice) {
         printf("\nInvoice paid successfully\n");
         invoice->paid = invoice->grossSum;
     }
+
+    free(formattedAccountNumber);
+    free(currentDate);
 }

@@ -19,7 +19,7 @@ struct Invoice {
 struct Invoice *createInvoice();
 
 void fillInvoice(struct Invoice *invoice, struct Person *solder, struct Person *buyer, char documentNumber[],
-                 char date[], char paymentDeadline[], char paid[]);
+                 char date[]);
 
 void showInvoice(struct Invoice *invoice);
 
