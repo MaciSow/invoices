@@ -1,0 +1,3 @@
+/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/CMakeFiles/edit_cache.dir
+/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/CMakeFiles/invoice.dir

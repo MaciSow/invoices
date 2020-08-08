@@ -1,60 +1,121 @@
-11/07/2020/0001 22.11.2020
-PysznePL 9515723354
+11/07/2020/0001 11.07.2020
+PysznePL 8410033137
 Marek Nowak
-54716843434548454384347543
-Polna 37
-24-222 Opole
+4485042789595947438959
+Konna 139
+85-324 Bydgoszcz
 Osoba_prywatna ---
 Stanislaw Gaska
 Slaska 22
 24-223 Opole
 ------------------------------
-kotlety schabowe
-143 5.00 23
-kotlety z piersi
-33 4.00 23
-rolady
-155 7.00 23
+pizza XXL
+1 40.00 23
+zapiekanka duża
+4 12.00 23
+skrzydełka w panierce
+30 3.00 23
+sos
+10 1.50.00 23
 ++++++++++++++++++++++++++++++
 30.11.2020 100.00
 ########################################
-10/07/2020/0020 22.11.2020
-ZAAAjebiste 9515723354
-Marek Nowak
+10/07/2020/0020 10.07.2020
+Taktak 7402133447
+Zbigniew Kowalczyk
 54716843434548454384347543
 Polna 37
 24-222 Opole
-Osoba_prywatna ---
-Stanislaw Gaska
-Slaska 22
-24-223 Opole
+Adray 3110097182
+Jaromir Borkowski
+Kochanowskiego 40
+43-502 Czechowice-Dziedzice
 ------------------------------
-kotlety schabowe
-143 5.00 23
-kotlety z piersi
-33 4.00 23
-rolady
-155 7.00 23
+kabel antenowy
+26 2.12 23
+koncowka antenowa
+10 4.00 23
+antena
+1 45.00 23
 ++++++++++++++++++++++++++++++
-30.11.2020 0.00
+11.11.2020 0.00
 ########################################
-11/07/2020/9999 22.11.2020
-niedobre 9515723354
-Marek Nowak
-54716843434548454384347543
-Polna 37
-24-222 Opole
+22/11/2020/9000 22.11.2020
+Niedobre 9515723354
+Gawel Grabowski
+53127345346697304534669730
+Brzoskwiniowa 11
+81-024 Gdynia
 Osobnicy 2718371932
-Stanislaw Gaska
-Slaska 22
-24-223 Opole
+Wiktoria Jaworska
+Krosnienska 38
+93-515 Łódź
 ------------------------------
 kotlety schabowe
-143 5.00 23
+25 7.00 8
 kotlety z piersi
-33 4.00 23
+30 6.00 8
 rolady
-155 7.00 23
+25 8.00 8
+kluski slaskie
+400 0.80 8
 ++++++++++++++++++++++++++++++
 30.11.2020 200.00
 ########################################
+01/08/2020/0002 01.08.2020
+ShoppingMeter 9703056651
+Zachariasz Borkowski
+55288443211793952117939522
+Wolinian 138
+52-339 Wrocław
+Osoba_prywatna ---
+Katarzyna Grabowska
+Okrzei 112
+30-429 Kraków
+------------------------------
+sluchawki JBL
+1 50.00 23
+kabel AUX 1,5m
+1 5.00 23
+transmiter
+1 20.00 23
+++++++++++++++++++++++++++++++
+01.08.2020 75.00
+########################################
+04/08/2020/0000 04.08.2020
+AutoStores 6052141246
+Felicyta Wozniak
+45329963277179536327717953
+Tracka 29
+10-365 Olsztyn
+Osoba_prywatna ---
+Zygfryd Olszewski
+Warszawiaka 123
+04-743 Warszawa
+------------------------------
+smar miedziany
+1 24.00 23
+smar ceraminczny
+1 18.88 23
+WD-40
+1 22.00 23
+++++++++++++++++++++++++++++++
+14.08.2020 0
+########################################
+06/08/2020/0000 06.08.2020
+GunGroup 6052141246
+Felicyta Wozniak
+45329963277179536327717953
+Tracka 29
+10-365 Olsztyn
+Osoba_prywatna ---
+Zygfryd Olszewski
+Warszawiaka 123
+04-743 Warszawa
+------------------------------
+naboje do wiatrowki
+140 0.11 23
+olej
+1 18.10 23
+++++++++++++++++++++++++++++++
+14.08.2020 0

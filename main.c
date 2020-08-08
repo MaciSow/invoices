@@ -11,22 +11,13 @@
 #include "functions/output.h"
 
 int main() {
-
-
-//    return 0;
-
-    const char *PATH = "";
-    char fileName[] = "invoice.txt";
+    const char *PATH = "";                 //ŚCIEŻKA DO PLIKU
+    char fileName[100] = "invoices.txt";   //NAZWA PLIKU WEJŚCIOWEGO
 
     struct Invoice *invoiceList;
     invoiceList = NULL;
 
     readDataFromFile(&invoiceList, PATH, fileName);
-//    tests
-
-
-//    return 0;
-
 
     int isClose = 0;
 
@@ -69,7 +60,7 @@ int main() {
 
 
     if (!readYesOrNoOption("Do you want overwrite file")) {
-        strcpy(fileName, "final.txt");
+        strcpy(fileName, "update_invoice.txt");    //NAZWA NOWEGO PLIKU WYJŚCIOWEGO
     }
 
     saveDataToFile(invoiceList, PATH, fileName);
@@ -77,5 +68,3 @@ int main() {
     deleteInvoiceList(&invoiceList);
     return 0;
 }
-
-// todo * doxygen

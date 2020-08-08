@@ -123,11 +123,7 @@ void invoiceOptions(struct Invoice **invoiceList, struct Invoice *invoice) {
     int isClose = 0;
 
     while (!isClose) {
-        printf("\nWhat next?\n "
-               "[1] Edit\n "
-               "[2] Delete\n "
-               "[3] Back\n"
-               "Your choice:");
+        printOptions();
 
         int select = readSelectOption(1, 3);
 
@@ -137,7 +133,10 @@ void invoiceOptions(struct Invoice **invoiceList, struct Invoice *invoice) {
                 break;
             case 2:
                 deleteInvoiceFromList(invoiceList, invoice);
+                printf("\033[0;32m");
                 printf("\nDeleted successfully");
+                printf("\033[0m");
+
             default:
                 isClose = 1;
                 break;
@@ -218,7 +217,10 @@ void invoiceEditOptions(struct Invoice *invoiceList, struct Invoice *invoice) {
                 break;
         }
         if (!isClose) {
+            printf("\033[0;32m");
             printf("\nEdited successfully");
+            printf("\033[0m");
+
         }
         showInvoice(invoice);
     }
@@ -334,7 +336,7 @@ int searchInvoicesByPaid(struct Invoice **invoiceList) {
     return 1;
 }
 
-void deleteInvoiceList(struct Invoice **invoiceList){
+void deleteInvoiceList(struct Invoice **invoiceList) {
     struct Invoice *tmp;
 
     while (*invoiceList != NULL) {

@@ -1,3 +1,5 @@
+/** @file */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,7 +46,10 @@ void saveDataToFile(struct Invoice *invoiceList, const char *PATH, char *fileNam
     }
 
     fclose(fptr);
+    printf("\033[0;32m");
     printf("\nSaved to file successfully");
+    printf("\033[0m");
+
 }
 
 void filePrintPersonData(struct Person *person, FILE *fptr) {
@@ -106,4 +111,12 @@ void printMenu() {
     printf("[5] Exit\n");
     printSeparator(48, '-');
     printf("Your choice:");
+}
+
+void printOptions(){
+    printf("\nWhat next?\n "
+           "[1] Edit\n "
+           "[2] Delete\n "
+           "[3] Back\n"
+           "Your choice:");
 }

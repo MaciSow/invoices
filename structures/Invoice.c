@@ -108,25 +108,6 @@ void addWare(struct Invoice *invoice, struct Ware *ware) {
     }
 }
 
-char *formatAccountNumber(const char *accountNumber) {
-    char *correctFormat = malloc(40);
-    memset(correctFormat, 0, 40);
-
-    int index = 0;
-
-    for (int i = 0; i < 26; ++i) {
-        correctFormat[index] = accountNumber[i];
-
-        if (i % 4 == 1) {
-            index++;
-            correctFormat[index] = ' ';
-        }
-        index++;
-    }
-
-    return correctFormat;
-}
-
 int readDataInvoice(struct Invoice *invoice) {
     int amountWeeks;
     int isPaid = 0;
@@ -178,6 +159,12 @@ void issuingInvoice(struct Invoice **invoiceList) {
     invoice->paid = isPaid ? invoice->grossSum : 0;
 
     addInvoice(invoiceList, invoice);
+
+    printf("\033[0;32m");
+    printf("\nAdded invoice successfully\n");
+    printf("\033[0m");
+
+    showInvoice(invoice);
 }
 
 void putWareList(struct Invoice *invoice) {
@@ -191,6 +178,10 @@ void putWareList(struct Invoice *invoice) {
         readDataWare(ware);
         calculateValuesWare(ware);
         addWare(invoice, ware);
+
+        printf("\033[0;32m");
+        printf("\nAdded ware successfully\n");
+        printf("\033[0m");
 
         if (readYesOrNoOption("\nAdd another ware?")) {
             isEnd = 1;
@@ -248,11 +239,7 @@ void editInvoice(struct Invoice *invoiceList, struct Invoice *invoice) {
 }
 
 void wareOptions(struct Invoice *invoice, struct Ware *ware) {
-    printf("\nWhat next?\n"
-           " [1] Edit\n"
-           " [2] Delete\n"
-           " [3] Back\n"
-           "Your choice:");
+    printOptions();
 
     int select = readSelectOption(1, 3);
 
@@ -417,7 +404,9 @@ void showInvoiceToPaid(struct Invoice *invoice) {
     int select = readSelectOption(1, 3);
 
     if (select == 1) {
-        printf("\nInvoice paid successfully\n");
+        printf("\033[0;32m");
+        printf("\nInvoice paid successfully");
+        printf("\033[0m");
         invoice->paid = invoice->grossSum;
     }
 

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="invoice"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="invoice">
+				<Option output="/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/invoice" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 invoice"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="invoice/fast">
+				<Option output="/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/invoice" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 invoice/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/macie/Desktop/invoice/cmake-build-release-wsl/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/functions/input.c">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/functions/input.h">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/functions/output.c">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/functions/output.h">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/functions/utilities.c">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/functions/utilities.h">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/main.c">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/structures/Address.c">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/structures/Address.h">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/structures/Invoice.c">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/structures/Invoice.h">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/structures/InvoiceBox.c">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/structures/InvoiceBox.h">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/structures/Person.c">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/structures/Person.h">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/structures/Ware.c">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/structures/Ware.h">
+			<Option target="invoice"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/macie/Desktop/invoice/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,3 +1,5 @@
+/** @file */
+
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -105,4 +107,23 @@ int isValidDatePart(char *date, int start, int length, int min, int max) {
 
     return (partDate >= min && partDate <= max) ? 1 : 0;
 
+}
+
+char *formatAccountNumber(const char *accountNumber) {
+    char *correctFormat = malloc(40);
+    memset(correctFormat, 0, 40);
+
+    int index = 0;
+
+    for (int i = 0; i < 26; ++i) {
+        correctFormat[index] = accountNumber[i];
+
+        if (i % 4 == 1) {
+            index++;
+            correctFormat[index] = ' ';
+        }
+        index++;
+    }
+
+    return correctFormat;
 }

@@ -1,3 +1,5 @@
+/** @file */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,7 +20,9 @@ void readDataFromFile(struct Invoice **invoiceList, const char *PATH, char *file
     strcat(readPath, fileName);
 
     if ((ptr = fopen(readPath, "r")) == NULL) {
-        printf("Error! opening file");
+        printf("\033[0;31m");
+        printf("%s %s %s\n", "file", fileName, "not found");
+        printf("\033[0m");
         exit(1);
     }
 
@@ -132,7 +136,10 @@ void readDataFromFile(struct Invoice **invoiceList, const char *PATH, char *file
     }
 
     fclose(ptr);
+    printf("\033[0;32m");
     printf("\n\nFile read done\n%i invoices loaded\n", counter);
+    printf("\033[0m");
+
 }
 
 void readLine(char *target, int length) {
@@ -159,10 +166,10 @@ void readLine(char *target, int length) {
 }
 
 int readInteger() {
-    char *str = malloc(15);
-    memset(str, '\0', 15);
+    char *str = malloc(3);
+    memset(str, '\0', 3);
 
-    readLine(str, 15);
+    readLine(str, 3);
 
     int value = strtol(str, NULL, 10);
     free(str);
@@ -181,7 +188,9 @@ float readNumber() {
 
         if (isNegative(string)) {
             isInvalid = 1;
+            printf("\033[0;31m");
             printf("    - wrong data, try again:");
+            printf("\033[0m");
         }
     } while (isInvalid);
 
@@ -201,7 +210,9 @@ float readPercentage() {
 
         if (strtof(string, NULL) >= 0 ? 0 : 1) {
             isInvalid = 1;
+            printf("\033[0;31m");
             printf("    - wrong data, try again:");
+            printf("\033[0m");
         }
     } while (isInvalid);
 
@@ -229,7 +240,9 @@ char *readDate() {
             return string;
         }
 
+        printf("\033[0;31m");
         printf("    - wrong data, try again:");
+        printf("\033[0m");
     }
 }
 
@@ -242,7 +255,9 @@ int readSelectOption(int start, int end) {
         select = readInteger();
         if (!(select >= start && select <= end)) {
             isInvalid = 1;
+            printf("\033[0;31m");
             printf("    - wrong data, try again:");
+            printf("\033[0m");
         }
     } while (isInvalid);
 
