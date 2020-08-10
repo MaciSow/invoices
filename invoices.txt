@@ -16,7 +16,7 @@ zapiekanka duża
 skrzydełka w panierce
 30 3.00 23
 sos
-10 1.50.00 23
+10 1.50 23
 ++++++++++++++++++++++++++++++
 30.11.2020 100.00
 ########################################
@@ -100,22 +100,101 @@ smar ceraminczny
 WD-40
 1 22.00 23
 ++++++++++++++++++++++++++++++
-14.08.2020 0
+14.08.2020 0.00
 ########################################
-06/08/2020/0000 06.08.2020
-GunGroup 6052141246
-Felicyta Wozniak
-45329963277179536327717953
-Tracka 29
-10-365 Olsztyn
+10/08/2020/0000 10.08.2020
+ABCO_Foods 6107289255
+Mateusz Piotrowski
+33154000172372925888495738
+Kalinskiego 12
+93-156 Łodz
 Osoba_prywatna ---
-Zygfryd Olszewski
-Warszawiaka 123
-04-743 Warszawa
+Jarek Sokolowski
+Sierpnia  6
+90-623 Łodz
 ------------------------------
-naboje do wiatrowki
-140 0.11 23
-olej
-1 18.10 23
+Zestaw frytek duzy
+4 7.00 23
+ketchup
+3 2.00 23
+sos czosntkowy
+2 3.00 23
 ++++++++++++++++++++++++++++++
-14.08.2020 0
+10.08.2020 49.20
+########################################
+10/08/2020/0001 10.08.2020
+Vitamax 9406130653
+Celestyn Duda
+28116022022655968260110761
+Marglowa 147
+31-766 Kraków
+Osoba_prywatna ---
+Jagoda Gorska
+Parandowskiego 93
+54-622 Wroclaw
+------------------------------
+Witamina C
+1 10.00 0
+wata
+1 2.50 23
+++++++++++++++++++++++++++++++
+07.09.2020 0.00
+########################################
+10/08/2020/0002 10.08.2020
+Shirt_Shop 9309065390
+Zosia Jasinska
+81124010377412630779166977
+Podolska  21
+81-321 Gdynia
+Learres 6308273317
+Borys Pawlowski
+Kapucynska 135
+00-245 Warszawa
+------------------------------
+Koszulka z logo S
+50 15.00 23
+koszulka z logo M
+60 15.00 23
+koszulka z logo L
+20 15.00 23
+koszula premium
+30 25.00 23
+++++++++++++++++++++++++++++++
+10.08.2020 3321.00
+########################################
+10/08/2020/0003 10.08.2020
+Auto_wheels 9904229747
+Patryk Kaczmarek
+46188000096730558717975759
+Swiatowida 75
+20-830 Lublin
+Osoba_prywatna ---
+Bolesława Gorska
+Heweliusza 47
+65-012 Zielona Góra
+------------------------------
+Dezent TF
+4 450.00 23
+++++++++++++++++++++++++++++++
+24.08.2020 0.00
+########################################
+10/08/2020/0004 10.08.2020
+Schodkowo 5907109431
+Eligiusz  Nowakowski
+54188000093776958568673649
+Beniowskiego 91
+80-961 Gdańsk
+Osoba_prywatna ---
+Klaudia Kowalczyk
+Debowa 28
+26-610 Radom
+------------------------------
+Schody na zamówienie
+1 2300.00 23
+dywanik schodowy
+13 34.00 23
+poręcz długa
+1 300.00 23
+++++++++++++++++++++++++++++++
+17.08.2020 0.00
+########################################

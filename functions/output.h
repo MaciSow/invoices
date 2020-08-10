@@ -4,7 +4,7 @@
 #define INVOICE_OUTPUT_H
 
 /** Funkcja zapisuje dane do pliku.
-*@param wskaźnik na jednokierunkową listę faktur
+*@param invoiceList wskaźnik na jednokierunkową listę faktur
 *@param PATH ścieżka do folderu z plikiem do zapisu, gdy "" to zapis do folderu w którym jest program
 *@param fileName nazwa pliku do zapisu (wymagane rozszerzenie - ".txt")
 */

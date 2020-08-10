@@ -1,3 +1,5 @@
+/** @file */
+
 #ifndef INVOICE_ADDRESS_H
 #define INVOICE_ADDRESS_H
 

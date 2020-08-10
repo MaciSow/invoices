@@ -1,17 +1,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "structures/Address.h"
 #include "structures/Person.h"
 #include "structures/Ware.h"
 #include "structures/Invoice.h"
-#include "structures/Address.h"
-#include "functions/input.h"
 #include "structures/InvoiceBox.h"
-#include "functions/utilities.h"
+#include "functions/input.h"
 #include "functions/output.h"
 
 int main() {
-    const char *PATH = "";                 //ŚCIEŻKA DO PLIKU
+    const char *PATH = "../";              //ŚCIEŻKA DO PLIKU
     char fileName[100] = "invoices.txt";   //NAZWA PLIKU WEJŚCIOWEGO
 
     struct Invoice *invoiceList;

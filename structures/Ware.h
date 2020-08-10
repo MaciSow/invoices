@@ -1,3 +1,5 @@
+/** @file */
+
 #ifndef INVOICE_WARE_H
 #define INVOICE_WARE_H
 

@@ -1,3 +1,5 @@
+/** @file */
+
 #ifndef INVOICE_PERSON_H
 #define INVOICE_PERSON_H
 

@@ -50,7 +50,7 @@ int isValidDateFormat(const char *date);
 /** Funkcja sprawdza czy część przekazanej daty jest poprawna.
 *@param date data do sprawdzenia zapisana jako string
 *@param start początek przedziału do sprawdzenia
-*@param end koniec przedziału do sprawdzenia
+*@param length długość przedziału do sprawdzenia
 *@param min wartość minimalna jaka może być w danym przedziale
 *@param max wartość maksymalna jaka może być w danym przedziale
 *@return 1 jeśli wartość w danej części daty jest poprawna, 0 w przeciwnym razie
